@@ -1,14 +1,15 @@
-package com.bloggingplatform.entities;
+package com.bloggingplatform.minorproject.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "BlOG")
-public class blog {
+public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int blogId;
@@ -19,6 +20,10 @@ public class blog {
     private String author;
     private String content;
     private String image;
+
+    // many blogs can have One user
+    @ManyToOne
+    private User user;
 
     public int getBlogId() {
         return blogId;
@@ -82,5 +87,13 @@ public class blog {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
