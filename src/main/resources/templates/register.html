@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="base::layout(~{::section})"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Blogging platform</title>
+    <link rel="stylesheet" th:href="@{/css/project.css}" />
+  </head>
+
+  <body>
+    <section>
+      <div align="center">
+        <div id="box">
+          <table border="2" cellspacing="0" style="width: 100%">
+            <tr>
+              <td
+                colspan="2"
+                align="center"
+                class="lables"
+                style="font-size: 30px"
+              >
+                <b>Registration Panel</b>
+              </td>
+            </tr>
+          </table>
+          <form
+            novalidate
+            method="post"
+            action=""
+            th:action="@{/do_register}"
+            th:object="${user}"
+          >
+            <table
+              border="0"
+              cellpadding="5"
+              cellspacing="20"
+              style="border-collapse: unset !important"
+            >
+              <tr>
+                <td class="lables">First Name:</td>
+                <td>
+                  <input
+                    type="text"
+                    name="firstName"
+                    id="firstName"
+                    class="form-control"
+                    th:classappend="${#fields.hasErrors('firstName') ? 'is-invalid':''}"
+                    placeholder=" First Name"
+                    th:value="${user.firstName}"
+                  />
+                  <div
+                    class="invalid-feedback"
+                    th:each="e: ${#fields.errors('firstName')}"
+                    th:text="${e}"
+                  >
+                    <p th:text="${user.firstName}"></p>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="lables">Last Name:</td>
+                <td>
+                  <input
+                    type="text"
+                    name="lastName"
+                    id="lastName"
+                    placeholder=" Last Name"
+                    size="25"
+                    th:value="${user.lastName}"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="lables">Email:</td>
+                <td>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Enter Email"
+                    size="25"
+                    title="Enter Email"
+                    th:value="${user.email}"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="lables">Password:</td>
+                <td>
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Enter Password"
+                    size="25"
+                    title="Enter Password"
+                    required
+                    maxlength="8"
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <td class="lables">Retype Password:</td>
+                <td>
+                  <input
+                    type="password"
+                    name="password2"
+                    id="password2"
+                    placeholder="Retype Password"
+                    size="25"
+                    title="Retype Password"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>
+                  <input
+                    type="checkbox"
+                    name="agreement"
+                    id="agreement"
+                  /><span>
+                    I have read and agree to the
+                    <a href="#"> Terms and Conditions</a></span
+                  >
+                </td>
+              </tr>
+
+              <tr>
+                <td align="center" colspan="2">
+                  <input type="submit" value="SIGN-UP" />
+                </td>
+              </tr>
+
+              <tr>
+                <td align="center" colspan="2">
+                  Already registered ? <a href="/login" class="links">LOGIN</a>
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+      </div>
+      <footer>
+        <div
+          th:if="${session.message}"
+          th:classappend="${session.message.type}"
+          class="alert"
+        >
+          <p th:text="${session.message.content}"></p>
+          <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+        </div>
+      </footer>
+    </section>
+  </body>
+</html>

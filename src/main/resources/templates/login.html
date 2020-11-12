@@ -1,9 +1,84 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="base::layout(~{::section})"
+>
+  <head>
+    <meta charset="UTF-8" />
     <title>Blogging platform</title>
-    <link rel="stylesheet" th:href="@{/css/home.css}"/>
-</head>
-<body></body>
+    <link rel="stylesheet" th:href="@{/css/project.css}" />
+  </head>
+
+  <body>
+    <section>
+      <div align="center">
+        <div id="box">
+          <table
+            border="2"
+            cellspacing="0"
+            style="width: 100%; text-align: center"
+          >
+            <tr>
+              <th
+                colspan="2"
+                align="center"
+                class="lables"
+                style="font-size: 30px"
+              >
+                <b>Login Panel</b>
+              </th>
+            </tr>
+          </table>
+          <form novalidate>
+            <table
+              border="0"
+              cellpadding="5"
+              cellspacing="20"
+              style="border-collapse: unset !important"
+            >
+              <tr>
+                <td class="lables">Email:</td>
+                <td>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Enter Email"
+                    size="25"
+                    required
+                    title="Enter Email"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="lables">Password:</td>
+                <td>
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Enter Password"
+                    size="25"
+                    required
+                    title="Enter Password"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td align="center" colspan="2">
+                  <input type="submit" value="LOGIN" />
+                </td>
+              </tr>
+              <tr>
+                <td align="center" colspan="2">
+                  <a href="/register" class="links">SIGN UP</a>
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>

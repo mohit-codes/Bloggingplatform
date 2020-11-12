@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "USER")
@@ -19,10 +21,16 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @NotBlank(message = "Cannot be empty")
+    @Size(min = 2, max = 20, message = "min 2 and max 20 characters are allowed")
     private String firstName;
     private String lastName;
     @Column(unique = true)
     private String email;
+
+    @NotBlank(message = "Cannot be empty")
+    @Size(min = 6, max = 10, message = "min 6 and max 10 characters are allowed")
     private String password;
     private String role;
     private boolean enabled;
@@ -138,6 +146,14 @@ public class User {
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    @Override
+    public String toString() {
+        return "User [about=" + about + ", blogCount=" + blogCount + ", blogs=" + blogs + ", email=" + email
+                + ", enabled=" + enabled + ", firstName=" + firstName + ", id=" + id + ", imageUrl=" + imageUrl
+                + ", lastName=" + lastName + ", password=" + password + ", questions=" + questions + ", role=" + role
+                + "]";
     }
 
 }
