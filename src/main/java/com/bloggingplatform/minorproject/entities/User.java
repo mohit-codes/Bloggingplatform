@@ -12,7 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+// import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -22,14 +23,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @NotBlank(message = "Cannot be empty")
-    @Size(min = 2, max = 20, message = "min 2 and max 20 characters are allowed")
+    // @NotBlank(message = "Cannot be empty")
+    @NotNull
+    @Size(min = 2, max = 5, message = "min 2 and max 20 characters are allowed")
     private String firstName;
     private String lastName;
     @Column(unique = true)
     private String email;
 
-    @NotBlank(message = "Cannot be empty")
+    // @NotBlank(message = "Cannot be empty")
+    @NotNull
     @Size(min = 6, max = 10, message = "min 6 and max 10 characters are allowed")
     private String password;
     private String role;

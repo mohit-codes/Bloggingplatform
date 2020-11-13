@@ -46,11 +46,12 @@ public class HomeController {
 
     // handler for user register
     @RequestMapping(value = "/do_register", method = RequestMethod.POST)
-    public String registerUser(@Valid @ModelAttribute("user") User user,
+    public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult result,
             @RequestParam(value = "agreement", defaultValue = "false") boolean agreement, Model model,
-            BindingResult result, HttpSession session) {
+            HttpSession session) {
 
         try {
+            System.out.println("OM ------- " + result);
             if (!agreement) {
                 System.out.println("You have not agreed the terms and conditions");
                 throw new Exception("You have not agreed the terms and conditions");
@@ -58,7 +59,8 @@ public class HomeController {
 
             // error validation
             if (result.hasErrors()) {
-                System.out.println("ERROR" + result.toString());
+
+                System.out.println("MOHIT-------ERROR" + result.toString());
                 model.addAttribute("user", user); // from data back to fields
                 return "register";
             }
