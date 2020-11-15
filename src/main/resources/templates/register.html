@@ -2,7 +2,7 @@
 <html
   lang="en"
   xmlns:th="http://www.thymeleaf.org"
-  th:replace="base::layout(~{::section})"
+  th:replace="baseForAuth::layout(~{::section})"
 >
   <head>
     <meta charset="UTF-8" />
@@ -12,6 +12,22 @@
 
   <body>
     <section>
+      <script>
+        var check = function () {
+          if (
+            document.getElementById("password").value ==
+            document.getElementById("confirmPassword").value
+          ) {
+            document.getElementById("message").style.color = "green";
+            document.getElementById("message").innerHTML = "";
+          } else {
+            document.getElementById("message").style.color = "red";
+            document.getElementById("message").innerHTML =
+              "password not matching";
+          }
+        };
+      </script>
+
       <div align="center">
         <div id="box">
           <table border="2" cellspacing="0" style="width: 100%">
@@ -36,7 +52,7 @@
             <table
               border="0"
               cellpadding="5"
-              cellspacing="20"
+              cellspacing="15"
               style="border-collapse: unset !important"
             >
               <tr>
@@ -47,17 +63,18 @@
                     name="firstName"
                     id="firstName"
                     class="form-control"
+                    minlength="2"
+                    maxlength="20"
                     th:classappend="${#fields.hasErrors('firstName') ? 'is-invalid':''}"
                     placeholder=" First Name"
                     th:value="${user.firstName}"
+                    th:field="*{firstName}"
                   />
                   <div
                     class="invalid-feedback"
                     th:each="e: ${#fields.errors('firstName')}"
                     th:text="${e}"
-                  >
-                    <p th:text="${user.firstName}"></p>
-                  </div>
+                  ></div>
                 </td>
               </tr>
               <tr>
@@ -67,26 +84,45 @@
                     type="text"
                     name="lastName"
                     id="lastName"
+                    class="form-control"
                     placeholder=" Last Name"
                     size="25"
                     th:value="${user.lastName}"
+                    th:field="*{lastName}"
                   />
                 </td>
               </tr>
               <tr>
                 <td class="lables">Email:</td>
+
                 <td>
                   <input
                     type="email"
                     name="email"
                     id="email"
+                    class="form-control"
+                    th:classappend="${#fields.hasErrors('email') ? 'is-invalid':''}"
                     placeholder="Enter Email"
                     size="25"
                     title="Enter Email"
                     th:value="${user.email}"
+                    th:field="*{email}"
                   />
                 </td>
               </tr>
+              <tr>
+                <td></td>
+                <td>
+                  <span
+                    style="font-size: 12.8px"
+                    class="error text-danger"
+                    th:each="err :
+                        ${#fields.errors('email')}"
+                    th:text="${err}"
+                  ></span>
+                </td>
+              </tr>
+
               <tr>
                 <td class="lables">Password:</td>
                 <td>
@@ -94,26 +130,43 @@
                     type="password"
                     name="password"
                     id="password"
+                    class="form-control"
+                    th:classappend="${#fields.hasErrors('*') ? 'is-invalid':''}"
                     placeholder="Enter Password"
                     size="25"
                     title="Enter Password"
                     required
-                    maxlength="8"
+                    minlength="8"
+                    maxlength="10"
+                    th:field="*{password}"
+                    onkeyup="check();"
                   />
                 </td>
               </tr>
 
               <tr>
-                <td class="lables">Retype Password:</td>
+                <td class="lables">Confirm Password:</td>
                 <td>
                   <input
                     type="password"
-                    name="password2"
-                    id="password2"
-                    placeholder="Retype Password"
+                    name="confirmPassword"
+                    id="confirmPassword"
+                    class="form-control"
+                    th:classappend="${#fields.hasErrors('*') ? 'is-invalid':''}"
+                    placeholder="Confirm Password"
                     size="25"
-                    title="Retype Password"
+                    title="Confirm Password"
+                    minlength="8"
+                    maxlength="10"
+                    th:field="*{confirmPassword}"
+                    onkeyup="check();"
                   />
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>
+                  <span id="message"></span>
                 </td>
               </tr>
               <tr>

@@ -12,7 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-// import javax.validation.constraints.NotBlank;
+
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -23,18 +24,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    // @NotBlank(message = "Cannot be empty")
     @NotNull
-    @Size(min = 2, max = 5, message = "min 2 and max 20 characters are allowed")
+    @Size(min = 2, max = 20, message = "min 2 and max 20 characters are allowed")
     private String firstName;
     private String lastName;
+
+    @Email(message = "Enter valid email address")
     @Column(unique = true)
     private String email;
 
-    // @NotBlank(message = "Cannot be empty")
     @NotNull
-    @Size(min = 6, max = 10, message = "min 6 and max 10 characters are allowed")
     private String password;
+
+    private String confirmPassword;
     private String role;
     private boolean enabled;
     private String imageUrl;
@@ -157,6 +159,14 @@ public class User {
                 + ", enabled=" + enabled + ", firstName=" + firstName + ", id=" + id + ", imageUrl=" + imageUrl
                 + ", lastName=" + lastName + ", password=" + password + ", questions=" + questions + ", role=" + role
                 + "]";
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
 }

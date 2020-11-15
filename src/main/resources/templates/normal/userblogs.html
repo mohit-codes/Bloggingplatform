@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="base::layout(~{::section})"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Blogging platform</title>
+    <link rel="stylesheet" th:href="@{/css/project.css}" />
+  </head>
+
+  <body>
+    <section>
+      <div class="sidenav">
+        <div
+          style="
+            background-color: aliceblue;
+            border: 2px solid black;
+            width: 173px;
+            height: 96px;
+            margin-bottom: 34px;
+            margin-left: 9px;
+          "
+        >
+          <ul>
+            <li style="display: flex">
+              <div
+                style="
+                  margin-left: 2px;
+                  height: 70px;
+                  width: 70px;
+                  border-radius: 50%;
+                  background-color: darkgoldenrod;
+                "
+              ></div>
+
+              <button
+                style="
+                  background-color: aliceblue;
+                  width: 79px;
+                  border: 1px solid black;
+                  margin: 18px 0px 0px 10px;
+                  border-radius: 0;
+                "
+                type="button"
+                class="btn"
+              >
+                EDIT
+              </button>
+            </li>
+            <li><span th:text="${user.firstName}"></span></li>
+          </ul>
+        </div>
+
+        <a href="/userblogs"
+          ><button type="button" class="btn btn-dark">WRITE BLOG</button>
+        </a>
+        <a href="#"
+          ><button type="button" class="btn btn-dark">HOME</button>
+        </a>
+        <a href="#"
+          ><button type="button" class="btn btn-dark">LIKES</button>
+        </a>
+        <a href="#"
+          ><button type="button" class="btn btn-dark">PROFILE</button>
+        </a>
+        <a href="/logout"
+          ><button type="button" class="btn btn-dark">LOGOUT</button>
+        </a>
+      </div>
+      <div class="feed">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="base::layout(~{::section})"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Blogging platform</title>
+    <link rel="stylesheet" th:href="@{/css/project.css}" />
+  </head>
+
+  <body>
+    <section>
+      <div class="sidenav">
+        <a th:href="@{'/user/userblogs'}"
+          ><button type="button" class="btn btn-dark">YOUR BLOGS</button>
+        </a>
+        <a href="#"><button type="button" class="btn btn-dark">QnA</button> </a>
+        <a href="#"
+          ><button type="button" class="btn btn-dark">WRITE BLOG</button>
+        </a>
+        <a href="/logout"
+          ><button type="button" class="btn btn-dark">LOGOUT</button>
+        </a>
+      </div>
+      <div class="feed">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </section>
+  </body>
+</html>

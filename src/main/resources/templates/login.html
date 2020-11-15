@@ -2,7 +2,7 @@
 <html
   lang="en"
   xmlns:th="http://www.thymeleaf.org"
-  th:replace="base::layout(~{::section})"
+  th:replace="baseForAuth::layout(~{::section})"
 >
   <head>
     <meta charset="UTF-8" />
@@ -30,7 +30,12 @@
               </th>
             </tr>
           </table>
-          <form novalidate>
+          <form
+            id="login-form"
+            class="form"
+            th:action="@{/dologin}"
+            method="POST"
+          >
             <table
               border="0"
               cellpadding="5"
@@ -42,8 +47,8 @@
                 <td>
                   <input
                     type="email"
-                    name="email"
-                    id="email"
+                    name="username"
+                    id="username"
                     placeholder="Enter Email"
                     size="25"
                     required
@@ -62,9 +67,21 @@
                     size="25"
                     required
                     title="Enter Password"
+                    maxlength="10"
                   />
                 </td>
               </tr>
+              <div
+                style="color: red"
+                th:if="${param.error}"
+                class="alert alert-danger"
+              >
+                Invalid username and password
+              </div>
+
+              <div th:if="${param.logout}" class="alert alert-success">
+                You have been logged out
+              </div>
               <tr>
                 <td align="center" colspan="2">
                   <input type="submit" value="LOGIN" />
