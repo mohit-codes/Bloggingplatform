@@ -33,4 +33,11 @@ public class UserController {
         model.addAttribute("user", user);
         return "normal/userblogs";
     }
+
+    @RequestMapping("/profile")
+    public String profile(Model model) {
+
+        model.addAttribute("user", user);
+        return "normal/profile";
+    }
 }
