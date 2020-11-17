@@ -11,6 +11,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import com.bloggingplatform.minorproject.dao.BlogRepository;
+import com.bloggingplatform.minorproject.dao.QuestionRepository;
 import com.bloggingplatform.minorproject.dao.UserRepository;
 import com.bloggingplatform.minorproject.entities.Blog;
 import com.bloggingplatform.minorproject.entities.Question;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +32,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-
+    @Autowired
+    private QuestionRepository questionRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -107,7 +110,7 @@ public class UserController {
             // message error
             session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
         }
-        return "normal/feed";
+        return "normal/addblog";
     }
 
     @RequestMapping("/feed")
@@ -120,17 +123,24 @@ public class UserController {
         List<Blog> blogs = this.blogRepository.findAll();
 
         model.addAttribute("blogs", blogs);
-        for (Blog blog : blogs) {
-            System.out.println(blog);
-        }
+
         return "normal/feed";
     }
 
     @RequestMapping("/userblogs")
-    public String myblogs(Model model) {
-
-        model.addAttribute("user", usercommon);
+    public String myblogs(Model model, Principal principal) {
+        Integer userid = usercommon.getId();
+        List<Blog> blogs = this.blogRepository.findByEmail(userid);
+        model.addAttribute("blogs", blogs);
         return "normal/userblogs";
+    }
+
+    @RequestMapping("/userquestions")
+    public String myquestions(Model model, Principal principal) {
+        Integer userid = usercommon.getId();
+        List<Question> questions = this.questionRepository.findByUserId(userid);
+        model.addAttribute("questions", questions);
+        return "normal/userquestions";
     }
 
     @RequestMapping("/profile")
@@ -142,8 +152,18 @@ public class UserController {
 
     @RequestMapping("/qna")
     public String qna(Model model) {
+        Integer userid = usercommon.getId();
+        List<Question> questions = this.questionRepository.findByUserIdNotAsked(userid);
 
-        model.addAttribute("user", usercommon);
+        model.addAttribute("questions", questions);
         return "normal/qna";
+    }
+
+    @GetMapping("/add-blog")
+    public String openblogForm(Model model) {
+        model.addAttribute("title", "Blogging platform");
+        model.addAttribute("blog", new Blog());
+
+        return "normal/addblog";
     }
 }

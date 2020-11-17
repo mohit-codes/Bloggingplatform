@@ -13,25 +13,52 @@
   <body>
     <section>
       <div class="sidenav">
-        <a th:href="@{/user/add-blog}">
-          <button type="button" class="btn btn-dark">WRITE BLOG</button>
+        <a th:href="@{/user/feed}"
+          ><button
+            style="height: fit-content"
+            type="button"
+            class="btn btn-dark"
+          >
+            ASKED QUESTIONS
+          </button>
         </a>
+        <button
+          type="button"
+          class="btn btn-dark"
+          data-toggle="modal"
+          data-target="#modelId"
+          style="margin-left: 16px"
+        >
+          ADD QUESTION
+        </button>
 
         <a th:href="@{/user/feed}"
           ><button type="button" class="btn btn-dark">HOME</button>
-        </a>
-        <a href="#"
-          ><button type="button" class="btn btn-dark">LIKES</button>
-        </a>
-        <a th:href="@{/user/profile}"
-          ><button type="button" class="btn btn-dark">PROFILE</button>
         </a>
         <a href="/logout"
           ><button type="button" class="btn btn-dark">LOGOUT</button>
         </a>
       </div>
-
-      <div class="feed">
+      <div th:replace="normal/fragments/questionfragment :: modal"></div>
+      <div class="feed" style="text-align: -webkit-center">
+        <div
+          class="alert alert-warning alert-dismissible fade show"
+          role="alert"
+          th:if="${session.message}"
+          th:classappend="${session.message.type}"
+          style="padding: 50px; background-color: black; width: fit-content"
+        >
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong th:text="${session.message.content}"></strong>
+          <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+        </div>
         <div
           style="
             margin: 30px;
@@ -45,9 +72,9 @@
           "
         >
           <!-- <div th:if="${blogs.empty}">
-            <span>No Blogs Available</span>
-          </div> -->
-          <th:block th:each="blog : ${blogs}">
+          <span>No Blogs Available</span>
+        </div> -->
+          <th:block th:each="question : ${questions}">
             <div
               style="
                 margin-right: 10px;
@@ -62,17 +89,17 @@
             >
               <div
                 style="font-size: 25px; font-weight: 800"
-                th:text="${blog.title}"
+                th:text="${question.question}"
               ></div>
               <p>
-                <strong>Author: </strong><a th:text="${blog.author}"></a>
+                <strong>Asker: </strong><a th:text="${question.asker}"></a>
                 <div style="font-size: 18px">
                   <span>
                     <span class="badge badge-secondary"
-                      >Created : <span th:text="${blog.date}"></span
+                      >Created : <span th:text="${question.date}"></span
                     ></span>
                     <span class="badge badge-secondary"
-                      >Topic : <span th:text="${blog.topic}"></span
+                      >Topic : <span th:text="${question.topic}"></span
                     ></span>
                     <span
                       style="text-transform: capitalize"
@@ -82,10 +109,18 @@
                 </div>
               </p>
               <!-- th:utext for html parsing -->
-              <h6 th:remove="tag" th:utext="${blog.content}"></h6>
+              <div th:each="answer : ${question.answers}">
+                <div th:text="${answer.author}"></div>
+                <div>
+                  <span class="badge badge-secondary"
+                    >Created : <span th:text="${answer.date}"></span
+                  ></span>
+                </div>
+                <h6 th:remove="tag" th:utext="${answer.content}"></h6>
+              </div>
             </div>
             <!-- <div><span th:text="${blog.title}"> Title </span></div>
-            <div><span th:text="${blog.author}"> Author </span></div> -->
+          <div><span th:text="${blog.author}"> Author </span></div> -->
           </th:block>
         </div>
       </div>

@@ -13,7 +13,7 @@
   <body>
     <section>
       <div class="sidenav">
-        <a th:href="@{/user/feed}"
+        <a th:href="@{/user/userquestions}"
           ><button
             style="height: fit-content"
             type="button"
@@ -59,9 +59,70 @@
           <strong th:text="${session.message.content}"></strong>
           <th:block th:text="${#session.removeAttribute('message')}"></th:block>
         </div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div
+          style="
+            margin: 30px;
+            text-align: start;
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: 100vh;
+            width: 1200px;
+            float: right;
+            padding-bottom: 70px;
+          "
+        >
+          <!-- <div th:if="${blogs.empty}">
+          <span>No Blogs Available</span>
+        </div> -->
+          <th:block th:each="question : ${questions}">
+            <div
+              style="
+                margin-right: 10px;
+                padding: 16px 16px 4px 16px;
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+                border-radius: 5px;
+                background-color: whitesmoke;
+                float: right;
+                width: -webkit-fill-available;
+                margin-bottom: 25px;
+              "
+            >
+              <div
+                style="font-size: 25px; font-weight: 800"
+                th:text="${question.question}"
+              ></div>
+              <p>
+                <strong>Asker: </strong><a th:text="${question.asker}"></a>
+                <div style="font-size: 18px">
+                  <span>
+                    <span class="badge badge-secondary"
+                      >Created : <span th:text="${question.date}"></span
+                    ></span>
+                    <span class="badge badge-secondary"
+                      >Topic : <span th:text="${question.topic}"></span
+                    ></span>
+                    <span
+                      style="text-transform: capitalize"
+                      class="badge badge-secondary"
+                    ></span>
+                  </span>
+                </div>
+              </p>
+              <!-- th:utext for html parsing -->
+              <div th:each="answer : ${question.answers}">
+                <div th:text="${answer.author}"></div>
+                <div>
+                  <span class="badge badge-secondary"
+                    >Created : <span th:text="${answer.date}"></span
+                  ></span>
+                </div>
+                <h6 th:remove="tag" th:utext="${answer.content}"></h6>
+              </div>
+            </div>
+            <!-- <div><span th:text="${blog.title}"> Title </span></div>
+          <div><span th:text="${blog.author}"> Author </span></div> -->
+          </th:block>
+        </div>
       </div>
     </section>
   </body>
