@@ -16,19 +16,64 @@
         <a th:href="@{'/user/userblogs'}"
           ><button type="button" class="btn btn-dark">YOUR BLOGS</button>
         </a>
-        <a href="#"><button type="button" class="btn btn-dark">QnA</button> </a>
-        <a href="#"
-          ><button type="button" class="btn btn-dark">WRITE BLOG</button>
+        <a th:href="@{/user/qna}"
+          ><button type="button" class="btn btn-dark">QnA</button>
         </a>
-        <a href="/logout"
+        <button
+          type="button"
+          class="btn btn-dark"
+          data-toggle="modal"
+          data-target="#modelId"
+          style="margin-left: 16px"
+        >
+          WRITE BLOG
+        </button>
+        <a th:href="@{'/logout'}"
           ><button type="button" class="btn btn-dark">LOGOUT</button>
         </a>
       </div>
-      <div class="feed">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+      <div th:replace="normal/fragments/modalfragment :: modal"></div>
+      <div class="feed" style="text-align: -webkit-center">
+        <div
+          class="alert alert-warning alert-dismissible fade show"
+          role="alert"
+          th:if="${session.message}"
+          th:classappend="${session.message.type}"
+          style="padding: 50px; background-color: black; width: fit-content"
+        >
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong th:text="${session.message.content}"></strong>
+          <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+        </div>
+        <div style="text-align: start;overflow-x: hidden;
+        overflow-y: auto;height: 100vh;width: 1200px;float: right; padding-bottom: 70px;">
+          <div th:if="${blogs.empty}">
+            <span>No Blogs Available</span>
+          </div>
+          <th:block th:each="blog : ${blogs}">
+            <div style="padding:16px 16px 4px 16px;box-shadow: 0 1px 1px rgba(0,0,0,0.04);border-radius: 5px;background-color: #dee0e1;float: right;width: -webkit-fill-available;margin-bottom: 25px;">
+              <div >Topic : <span th:text="${blog.topic}"></span> </div>
+              <h2><p th:text="${blog.title}"></p></h2>
+              <p><strong>Author: </strong><a th:text="${blog.author}"></a>
+                <span class="float-right">
+                  <span class="badge badge-secondary">Created: <span th:text="${blog.date}"></span></span>
+                  <span class="badge badge-secondary"><span th:text="${blog.topic}"></span></span>
+                  <span style="text-transform: capitalize;" class="badge badge-secondary"></span></p>
+                </span>
+              </p>
+              <h4>Description:</h4><h6 th:text="${blog.content}"></h6>
+            </div>
+            <!-- <div><span th:text="${blog.title}"> Title </span></div>
+            <div><span th:text="${blog.author}"> Author </span></div> -->
+          </th:block>
+        </div>
       </div>
     </section>
   </body>
