@@ -1,12 +1,15 @@
 package com.bloggingplatform.minorproject.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import com.bloggingplatform.minorproject.dao.QuestionRepository;
 import com.bloggingplatform.minorproject.dao.UserRepository;
 import com.bloggingplatform.minorproject.entities.User;
 import com.bloggingplatform.minorproject.helper.Message;
-
+import com.bloggingplatform.minorproject.entities.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,17 @@ public class HomeController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private QuestionRepository questionRepository;
+
+    @RequestMapping("/qna")
+    public String qna(Model model) {
+
+        List<Question> questions = this.questionRepository.findAll();
+
+        model.addAttribute("questions", questions);
+        return "qna";
+    }
 
     // home handler
     @RequestMapping("/home")

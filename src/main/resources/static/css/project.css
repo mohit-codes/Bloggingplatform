@@ -20,7 +20,7 @@ nav {
   background: transparent;
   color: black;
   display: flex;
-  justify-content: space-between;
+
   align-items: center;
   text-transform: uppercase;
 }
@@ -172,11 +172,11 @@ sidenav a:hover {
 }
 .box-black {
   background-color: black;
-  height: 7vh;
+  height: 38px;
   width: 100%;
   position: fixed;
   bottom: 0px;
-  font-size: 18px;
+  font-size: 13px;
 
   color: white;
 }
@@ -192,4 +192,69 @@ badge-secondary {
 }
 .text-muted {
   color: white !important;
+}
+
+.searchbar {
+  margin-left: auto;
+  margin-right: 15px;
+  margin-bottom: auto !important;
+  margin-top: auto !important;
+  height: 60px !important;
+  background-color: #353b48 !important;
+  border-radius: 30px !important;
+  padding: 10px !important;
+}
+
+.search_input {
+  color: white !important;
+  border: 0 !important;
+  outline: 0 !important;
+  background: none !important;
+  width: 0 !important;
+  caret-color: transparent !important;
+  line-height: 40px !important;
+  transition: width 0.4s linear !important;
+}
+
+.searchbar:hover > .search_input {
+  padding: 0 10px !important;
+  width: 400px !important;
+  caret-color: white !important;
+  transition: width 0.4s linear !important;
+}
+
+/* .search_input:hover >  */
+.search_icon {
+  background: white;
+}
+
+.search_icon {
+  height: 40px !important;
+  width: 40px !important;
+  float: right !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  border-radius: 50% !important;
+  color: white !important;
+  text-decoration: none !important;
+}
+.page-item:first-child .page-link {
+  margin-left: 0;
+  border-top-left-radius: 14px;
+  border-bottom-left-radius: 14px;
+}
+.page-item.active .page-link {
+  background-color: #334;
+  border-color: #334;
+}
+.page-link {
+  color: black;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+}
+.page-item:last-child .page-link {
+  margin-left: 0;
+  border-top-right-radius: 14px;
+  border-bottom-right-radius: 14px;
 }

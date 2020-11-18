@@ -20,10 +20,14 @@ import com.bloggingplatform.minorproject.helper.Message;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -113,33 +117,47 @@ public class UserController {
         return "normal/addblog";
     }
 
-    @RequestMapping("/feed")
-    public String feed(Model model, Principal principal) {
+    @RequestMapping("/feed/{page}")
+    public String feed(@PathVariable("page") Integer page, Model model, Principal principal) {
 
         String email = principal.getName();
 
         usercommon = userRepository.getUserByEmail(email);
 
-        List<Blog> blogs = this.blogRepository.findAll();
+        Pageable pageable = PageRequest.of(page, 8);
 
+        Page<Blog> blogs = this.blogRepository.findAllWithPage(pageable);
+
+        model.addAttribute("navTitle", "Blogs");
+        model.addAttribute("currentPage", page);
         model.addAttribute("blogs", blogs);
+        model.addAttribute("totalPages", blogs.getTotalPages());
 
         return "normal/feed";
     }
 
-    @RequestMapping("/userblogs")
-    public String myblogs(Model model, Principal principal) {
+    @RequestMapping("/userblogs/{page}")
+    public String myblogs(@PathVariable("page") Integer page, Model model, Principal principal) {
         Integer userid = usercommon.getId();
-        List<Blog> blogs = this.blogRepository.findByEmail(userid);
+        Pageable pageable = PageRequest.of(page, 8);
+        Page<Blog> blogs = this.blogRepository.findByEmail(userid, pageable);
+
+        model.addAttribute("navTitle", "Your Blogs");
+        model.addAttribute("currentPage", page);
         model.addAttribute("blogs", blogs);
+        model.addAttribute("totalPages", blogs.getTotalPages());
         return "normal/userblogs";
     }
 
-    @RequestMapping("/userquestions")
-    public String myquestions(Model model, Principal principal) {
+    @RequestMapping("/userquestions/{page}")
+    public String myquestions(@PathVariable("page") Integer page, Model model, Principal principal) {
         Integer userid = usercommon.getId();
-        List<Question> questions = this.questionRepository.findByUserId(userid);
+        Pageable pageable = PageRequest.of(page, 8);
+        Page<Question> questions = this.questionRepository.findByUserId(userid, pageable);
+        model.addAttribute("navTitle", "Asked Question");
+        model.addAttribute("currentPage", page);
         model.addAttribute("questions", questions);
+        model.addAttribute("totalPages", questions.getTotalPages());
         return "normal/userquestions";
     }
 
@@ -148,14 +166,20 @@ public class UserController {
 
         model.addAttribute("user", usercommon);
         return "normal/profile";
+
     }
 
-    @RequestMapping("/qna")
-    public String qna(Model model) {
+    // per page = 10
+    // current page = 0
+    @RequestMapping("/qna/{page}")
+    public String qna(@PathVariable("page") Integer page, Model model) {
         Integer userid = usercommon.getId();
-        List<Question> questions = this.questionRepository.findByUserIdNotAsked(userid);
-
+        Pageable pageable = PageRequest.of(page, 8);
+        Page<Question> questions = this.questionRepository.findByUserIdNotAsked(userid, pageable);
+        model.addAttribute("navTitle", "Questions");
         model.addAttribute("questions", questions);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", questions.getTotalPages());
         return "normal/qna";
     }
 
