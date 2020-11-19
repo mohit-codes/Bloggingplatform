@@ -163,7 +163,8 @@ public class UserController {
 
     @RequestMapping("/profile")
     public String profile(Model model) {
-
+        model.addAttribute("navTitle", "Profile");
+        model.addAttribute("hide", true);
         model.addAttribute("user", usercommon);
         return "normal/profile";
 
@@ -176,11 +177,22 @@ public class UserController {
         Integer userid = usercommon.getId();
         Pageable pageable = PageRequest.of(page, 8);
         Page<Question> questions = this.questionRepository.findByUserIdNotAsked(userid, pageable);
+
         model.addAttribute("navTitle", "Questions");
         model.addAttribute("questions", questions);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", questions.getTotalPages());
         return "normal/qna";
+
+    }
+
+    @GetMapping("/qna/answers/{id}")
+    public String ans(@PathVariable("id") Integer id, Model model) {
+
+        model.addAttribute("navTitle", "Answer");
+
+        return "normal/answer";
+
     }
 
     @GetMapping("/add-blog")

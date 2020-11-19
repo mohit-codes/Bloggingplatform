@@ -258,3 +258,9 @@ badge-secondary {
   border-top-right-radius: 14px;
   border-bottom-right-radius: 14px;
 }
+.arrowicon:target {
+  color: #343a30;
+}
+.answers:focus {
+  color: #343a30;
+}

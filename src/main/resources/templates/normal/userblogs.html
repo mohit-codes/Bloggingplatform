@@ -17,7 +17,7 @@
           <button type="button" class="btn btn-dark">WRITE BLOG</button>
         </a>
 
-        <a th:href="@{/user/feed}"
+        <a th:href="@{/user/feed/0}"
           ><button type="button" class="btn btn-dark">HOME</button>
         </a>
         <a href="#"
@@ -48,44 +48,49 @@
             <span>No Blogs Available</span>
           </div> -->
           <th:block th:each="blog : ${blogs}">
-            <div
-              style="
-                margin-right: 10px;
-                padding: 16px 16px 4px 16px;
-                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-                border-radius: 5px;
-                background-color: whitesmoke;
-                float: right;
-                width: -webkit-fill-available;
-                margin-bottom: 25px;
-              "
-            >
+            <div>
               <div
-                style="font-size: 25px; font-weight: 800"
-                th:text="${blog.title}"
-              ></div>
-              <p>
-                <strong>Author: </strong><a th:text="${blog.author}"></a>
-                <div style="font-size: 18px">
-                  <span>
-                    <span class="badge badge-secondary"
-                      >Created : <span th:text="${blog.date}"></span
-                    ></span>
-                    <span class="badge badge-secondary"
-                      >Topic : <span th:text="${blog.topic}"></span
-                    ></span>
-                    <span
-                      style="text-transform: capitalize"
-                      class="badge badge-secondary"
-                    ></span>
-                  </span>
-                </div>
-              </p>
-              <!-- th:utext for html parsing -->
-              <h6 th:remove="tag" th:utext="${blog.content}"></h6>
+                style="
+                  margin-right: 10px;
+                  padding: 16px 16px 4px 16px;
+                  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+                  border-radius: 5px;
+                  background-color: whitesmoke;
+                  float: right;
+                  width: -webkit-fill-available;
+                  margin-bottom: 25px;
+                "
+              >
+                <div
+                  style="font-size: 25px; font-weight: 800"
+                  th:text="${blog.title}"
+                ></div>
+                <p>
+                  <i class="fas fa-user-circle" style="font-size: 25px"></i>
+                  <strong>Author: </strong><a th:text="${blog.author}"></a>
+                  <div style="font-size: 18px">
+                    <span>
+                      <span class="badge badge-secondary"
+                        >Created : <span th:text="${blog.date}"></span
+                      ></span>
+                      <span class="badge badge-secondary"
+                        >Topic : <span th:text="${blog.topic}"></span
+                      ></span>
+                      <span
+                        style="text-transform: capitalize"
+                        class="badge badge-secondary"
+                      ></span>
+                    </span>
+                  </div>
+                </p>
+                <!-- th:utext for html parsing -->
+                <h6 th:remove="tag" th:utext="${blog.content}"></h6>
+              </div>
+              <div>
+                <span><i class="fas fa-arrow-circle-up"></i></span>
+                <span><i class="fas fa-ellipsis-h"></i></span>
+              </div>
             </div>
-            <!-- <div><span th:text="${blog.title}"> Title </span></div>
-            <div><span th:text="${blog.author}"> Author </span></div> -->
           </th:block>
         </div>
       </div>

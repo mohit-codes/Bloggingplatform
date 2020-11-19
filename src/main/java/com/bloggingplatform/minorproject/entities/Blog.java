@@ -1,5 +1,6 @@
 package com.bloggingplatform.minorproject.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,7 @@ public class Blog {
     private String topic;
     private String date;
     private String author;
+    @Column(length = 5000)
     private String content;
     private String image;
 

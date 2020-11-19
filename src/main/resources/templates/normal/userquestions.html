@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+/0<!DOCTYPE html>
 <html
   lang="en"
   xmlns:th="http://www.thymeleaf.org"
@@ -7,13 +7,13 @@
   <head>
     <meta charset="UTF-8" />
     <title>Blogging platform</title>
-    <link rel="stylesheet" th:href="@{/css/project.css}" />
+    <link rel="stylesheet" th:href="@{/cs/0s/project.css}" />
   </head>
 
   <body>
     <section>
       <div class="sidenav">
-        <a th:href="@{/user/feed}"
+        <a th:href="@{/user/userquestions/0}"
           ><button
             style="height: fit-content"
             type="button"
@@ -32,7 +32,7 @@
           ADD QUESTION
         </button>
 
-        <a th:href="@{/user/feed}"
+        <a th:href="@{/user/feed/0}"
           ><button type="button" class="btn btn-dark">HOME</button>
         </a>
         <a href="/logout"
@@ -92,6 +92,7 @@
                 th:text="${question.question}"
               ></div>
               <p>
+                <i class="fas fa-user-circle" style="font-size: 25px"></i>
                 <strong>Asker: </strong><a th:text="${question.asker}"></a>
                 <div style="font-size: 18px">
                   <span>
@@ -107,6 +108,26 @@
                     ></span>
                   </span>
                 </div>
+                <div
+                  style="
+                    font-size: 17px;
+                    font-weight: 800;
+                    padding: 12px 0px 0px 9px;
+                  "
+                >
+                  <a class="answers" href="user/qna/#" style="color: #334e33">
+                    <span
+                      style="margin-right: 2px"
+                      th:if="${question.getAnswers().isEmpty()}"
+                      >Not yet answered</span
+                    ><span
+                      style="margin-right: 2px"
+                      th:if="${!question.getAnswers().isEmpty()}"
+                      th:text="${question.getAnswers().size()}"
+                      >Answer</span
+                    >
+                  </a>
+                </div>
               </p>
               <!-- th:utext for html parsing -->
               <div th:each="answer : ${question.answers}">
@@ -117,6 +138,10 @@
                   ></span>
                 </div>
                 <h6 th:remove="tag" th:utext="${answer.content}"></h6>
+              </div>
+              <div>
+                <span><i class="fas fa-arrow-circle-up"></i></span>
+                <span><i class="fas fa-ellipsis-h"></i></span>
               </div>
             </div>
             <!-- <div><span th:text="${blog.title}"> Title </span></div>

@@ -13,10 +13,10 @@
   <body>
     <section>
       <div class="sidenav">
-        <a th:href="@{'/user/userblogs'}"
+        <a th:href="@{'/user/userblogs/0'}"
           ><button type="button" class="btn btn-dark">YOUR BLOGS</button>
         </a>
-        <a th:href="@{/user/qna}"
+        <a th:href="@{/user/qna/0}"
           ><button type="button" class="btn btn-dark">QnA</button>
         </a>
         <a th:href="@{/user/add-blog}">
@@ -61,6 +61,7 @@
                 th:text="${blog.title}"
               ></div>
               <p>
+                <i class="fas fa-user-circle" style="font-size: 25px"></i>
                 <strong>Author: </strong><a th:text="${blog.author}"></a>
                 <div style="font-size: 18px">
                   <span>
@@ -78,10 +79,39 @@
                 </div>
               </p>
               <!-- th:utext for html parsing -->
-              <h6 th:remove="tag" th:utext="${blog.content}"></h6>
+              <div style="padding: 5px 0px 32px 13px">
+                <h6 th:remove="tag" th:utext="${blog.content}"></h6>
+              </div>
+
+              <button
+                style="
+                  width: 54px;
+                  border: 1px solid black;
+                  background-color: transparent;
+                  padding: 2px;
+                  border-radius: 15px;
+                  height: fit-content;
+                "
+                class="btn btn-light likebutton"
+              >
+                <svg width="24px" height="24px" viewBox="0 0 24 24">
+                  <g
+                    id="upvote"
+                    class="icon_svg-stroke icon_svg-fill arrowicon"
+                    stroke-width="1.5"
+                    stroke="#666"
+                    fill="none"
+                    fill-rule="evenodd"
+                    stroke-linejoin="round"
+                  >
+                    <polygon
+                      points="12 4 3 15 9 15 9 20 15 20 15 15 21 15"
+                    ></polygon>
+                  </g>
+                </svg>
+                <span th:text="${blog.likes}"></span>
+              </button>
             </div>
-            <!-- <div><span th:text="${blog.title}"> Title </span></div>
-            <div><span th:text="${blog.author}"> Author </span></div> -->
           </th:block>
           <!--  pagination part -->
           <nav aria-label="Page navigation example">
