@@ -87,10 +87,46 @@
                 margin-bottom: 25px;
               "
             >
-              <div
-                style="font-size: 25px; font-weight: 800"
-                th:text="${question.question}"
-              ></div>
+              <div style="display: flex">
+                <div
+                  style="font-size: 25px; font-weight: 800"
+                  th:text="${question.question}"
+                ></div>
+                <div style="margin-left: auto">
+                  <div class="btn-group open">
+                    <a class="btn btn-primary" href="#"
+                      ><i class="fa fa-user fa-fw"></i> User</a
+                    >
+                    <a
+                      class="btn btn-primary dropdown-toggle"
+                      data-toggle="dropdown"
+                      href="#"
+                    >
+                      <span
+                        class="fa fa-caret-down"
+                        title="Toggle dropdown menu"
+                      ></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a href="#"><i class="fa fa-pencil fa-fw"></i> Edit</a>
+                      </li>
+                      <li>
+                        <a href="#"
+                          ><i class="fa fa-trash-o fa-fw"></i> Delete</a
+                        >
+                      </li>
+                      <li>
+                        <a href="#"><i class="fa fa-ban fa-fw"></i> Ban</a>
+                      </li>
+                      <li class="divider"></li>
+                      <li>
+                        <a href="#"><i class="fa fa-unlock"></i> Make admin</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
               <p>
                 <i class="fas fa-user-circle" style="font-size: 25px"></i>
                 <strong>Asker: </strong><a th:text="${question.asker}"></a>
@@ -115,34 +151,25 @@
                     padding: 12px 0px 0px 9px;
                   "
                 >
-                  <a class="answers" href="user/qna/#" style="color: #334e33">
+                  <span
+                    style="margin-right: 2px"
+                    th:if="${question.getAnswers().isEmpty()}"
+                    >Not yet answered</span
+                  >
+                  <a
+                    class="answers"
+                    th:href="@{answer/{id}(id=(${question.questionId}))}"
+                    style="color: #334e33"
+                  >
                     <span
                       style="margin-right: 2px"
-                      th:if="${question.getAnswers().isEmpty()}"
-                      >Not yet answered</span
-                    ><span
-                      style="margin-right: 2px"
                       th:if="${!question.getAnswers().isEmpty()}"
-                      th:text="${question.getAnswers().size()}"
-                      >Answer</span
-                    >
+                      ><span th:text="${question.getAnswers().size()}"></span
+                      ><span style="margin-left: 8px" th:text="Answer"></span
+                    ></span>
                   </a>
                 </div>
               </p>
-              <!-- th:utext for html parsing -->
-              <div th:each="answer : ${question.answers}">
-                <div th:text="${answer.author}"></div>
-                <div>
-                  <span class="badge badge-secondary"
-                    >Created : <span th:text="${answer.date}"></span
-                  ></span>
-                </div>
-                <h6 th:remove="tag" th:utext="${answer.content}"></h6>
-              </div>
-              <div>
-                <span><i class="fas fa-arrow-circle-up"></i></span>
-                <span><i class="fas fa-ellipsis-h"></i></span>
-              </div>
             </div>
             <!-- <div><span th:text="${blog.title}"> Title </span></div>
           <div><span th:text="${blog.author}"> Author </span></div> -->

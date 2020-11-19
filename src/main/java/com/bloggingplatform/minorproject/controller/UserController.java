@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.bloggingplatform.minorproject.dao.BlogRepository;
 import com.bloggingplatform.minorproject.dao.QuestionRepository;
 import com.bloggingplatform.minorproject.dao.UserRepository;
+import com.bloggingplatform.minorproject.entities.Answer;
 import com.bloggingplatform.minorproject.entities.Blog;
 import com.bloggingplatform.minorproject.entities.Question;
 import com.bloggingplatform.minorproject.entities.User;
@@ -32,6 +35,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/user")
@@ -44,6 +48,7 @@ public class UserController {
     BlogRepository blogRepository;
 
     User usercommon;
+    Integer questionId;
 
     @PostMapping("/process-question")
     public String uploadquestion(@ModelAttribute Question question, Principal principal, HttpSession session) {
@@ -186,9 +191,11 @@ public class UserController {
 
     }
 
-    @GetMapping("/qna/answers/{id}")
+    @RequestMapping("/qna/answer/{id}")
     public String ans(@PathVariable("id") Integer id, Model model) {
-
+        Question question = this.questionRepository.findQuestionById(id);
+        questionId = id;
+        model.addAttribute("question", question);
         model.addAttribute("navTitle", "Answer");
 
         return "normal/answer";
@@ -202,4 +209,33 @@ public class UserController {
 
         return "normal/addblog";
     }
+
+    @PostMapping(value = "/process-answer")
+    public String postAnswer(@ModelAttribute Answer answer, Principal principal, HttpSession session) {
+        try {
+
+            String email = principal.getName();
+            User user = this.userRepository.getUserByEmail(email);
+            Question question = this.questionRepository.findQuestionById(questionId);
+            answer.setAuthor(user.getFirstName() + " " + user.getLastName());
+            String today = java.time.LocalDate.now().toString();
+
+            answer.setDate(today.substring(8) + "-" + today.substring(5, 7) + "-" + today.substring(0, 4));
+
+            question.getAnswers().add(answer);
+            this.questionRepository.save(question);
+
+            System.out.println("Added to data base");
+
+            // message success.......
+            session.setAttribute("message", new Message("Your answer is submitted !", "success"));
+        } catch (Exception e) {
+            System.out.println("ERROR " + e.getMessage());
+            e.printStackTrace();
+            // message error
+            session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
+        }
+        return "normal/qna";
+    }
+
 }

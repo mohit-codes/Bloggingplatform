@@ -61,10 +61,13 @@
                   margin-bottom: 25px;
                 "
               >
-                <div
-                  style="font-size: 25px; font-weight: 800"
-                  th:text="${blog.title}"
-                ></div>
+                <div>
+                  <div
+                    style="font-size: 25px; font-weight: 800"
+                    th:text="${blog.title}"
+                  ></div>
+                  <div><i class="fas fa-ellipsis-h"></i></div>
+                </div>
                 <p>
                   <i class="fas fa-user-circle" style="font-size: 25px"></i>
                   <strong>Author: </strong><a th:text="${blog.author}"></a>
@@ -85,10 +88,6 @@
                 </p>
                 <!-- th:utext for html parsing -->
                 <h6 th:remove="tag" th:utext="${blog.content}"></h6>
-              </div>
-              <div>
-                <span><i class="fas fa-arrow-circle-up"></i></span>
-                <span><i class="fas fa-ellipsis-h"></i></span>
               </div>
             </div>
           </th:block>

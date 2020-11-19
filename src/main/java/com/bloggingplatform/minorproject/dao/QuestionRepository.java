@@ -9,6 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
+    @Query("select q from Question q where q.questionId = :id")
+    Question findQuestionById(@Param("id") Integer id);
+
     @Query("select q from Question q where q.user.id <> :userid")
     Page<Question> findByUserIdNotAsked(@Param("userid") Integer userid, Pageable pePageable);
 

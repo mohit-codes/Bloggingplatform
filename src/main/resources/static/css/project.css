@@ -188,7 +188,7 @@ badge-secondary {
   color: black !important;
   background-color: white;
   margin: 0px !important;
-  width: 698px !important;
+  width: 100% !important;
 }
 .text-muted {
   color: white !important;

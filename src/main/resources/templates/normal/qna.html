@@ -118,7 +118,7 @@
                   >
                     <a
                       class="answers"
-                      th:href="@{${question.questionId}}"
+                      th:href="@{answer/{id}(id=(${question.questionId}))}"
                       style="color: #334e33"
                     >
                       <span
@@ -128,12 +128,12 @@
                       ><span
                         style="margin-right: 2px"
                         th:if="${!question.getAnswers().isEmpty()}"
-                        th:text="${question.getAnswers().size()}"
-                        >Answer</span
-                      >
+                        ><span th:text="${question.getAnswers().size()}"></span
+                        ><span style="margin-left: 8px" th:text="Answer"></span
+                      ></span>
                     </a>
                   </div>
-                  <a th:href="@{user/qna/answers}">
+                  <a h:href="@{answer/{id}(id=(${question.questionId}))}">
                     <div style="padding: 11px 0px 0px 5px">
                       <button style="padding: 5px; border-radius: 35px">
                         <i class="fas fa-pen-fancy"></i> Answer
@@ -142,48 +142,6 @@
                   >
                 </div>
               </p>
-              <!-- th:utext for html parsing -->
-              <div th:each="answer : ${question.getAnswers()}">
-                <div th:text="${answer.author}"></div>
-                <div>
-                  <span class="badge badge-secondary"
-                    >Created : <span th:text="${answer.date}"></span
-                  ></span>
-                </div>
-                <div>
-                  <h6 th:remove="tag" th:utext="${answer.content}"></h6>
-                </div>
-                <div>
-                  <button
-                    style="
-                      width: 54px;
-                      border: 1px solid black;
-                      background-color: transparent;
-                      padding: 2px;
-                      border-radius: 15px;
-                      height: fit-content;
-                    "
-                    class="btn btn-light likebutton"
-                  >
-                    <svg width="24px" height="24px" viewBox="0 0 24 24">
-                      <g
-                        id="upvote"
-                        class="icon_svg-stroke icon_svg-fill arrowicon"
-                        stroke-width="1.5"
-                        stroke="#666"
-                        fill="none"
-                        fill-rule="evenodd"
-                        stroke-linejoin="round"
-                      >
-                        <polygon
-                          points="12 4 3 15 9 15 9 20 15 20 15 15 21 15"
-                        ></polygon>
-                      </g>
-                    </svg>
-                    <span th:text="${question.upvote}"></span>
-                  </button>
-                </div>
-              </div>
             </div>
           </th:block>
         </div>

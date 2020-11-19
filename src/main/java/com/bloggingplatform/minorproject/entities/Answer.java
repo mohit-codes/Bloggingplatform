@@ -1,5 +1,6 @@
 package com.bloggingplatform.minorproject.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +17,7 @@ public class Answer {
     private int upvotes;
     private String date;
     private String author;
+    @Column(length = 5000)
     private String content;
 
     // many answers can have One question
