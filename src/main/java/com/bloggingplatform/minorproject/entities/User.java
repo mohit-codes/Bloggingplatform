@@ -45,8 +45,8 @@ public class User {
     private String about;
 
     // One user can have many blogs
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY) // mappedby = 'user' for foriegn
-                                                                  // key management
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) // mappedby = 'user' for foriegn
+                                                                   // key management
     private List<Blog> blogs = new ArrayList<>();
 
     // One user can have many questions

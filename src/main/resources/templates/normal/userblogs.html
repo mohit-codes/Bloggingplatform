@@ -44,9 +44,26 @@
             padding-bottom: 70px;
           "
         >
-          <!-- <div th:if="${blogs.empty}">
-            <span>No Blogs Available</span>
-          </div> -->
+          <div
+            class="alert alert-warning alert-dismissible fade show"
+            role="alert"
+            th:if="${session.message}"
+            th:classappend="${session.message.type}"
+            style="padding: 50px; background-color: black; width: fit-content"
+          >
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <strong th:text="${session.message.content}"></strong>
+            <th:block
+              th:text="${#session.removeAttribute('message')}"
+            ></th:block>
+          </div>
           <th:block th:each="blog : ${blogs}">
             <div>
               <div
@@ -61,12 +78,42 @@
                   margin-bottom: 25px;
                 "
               >
-                <div>
+                <div style="display: flex">
                   <div
                     style="font-size: 25px; font-weight: 800"
                     th:text="${blog.title}"
                   ></div>
-                  <div><i class="fas fa-ellipsis-h"></i></div>
+                  <div style="margin-left: auto">
+                    <div class="btn-group open">
+                      <a
+                        style="width: fit-content; background: transparent"
+                        class="btn btn-light dropdown-toggle"
+                        data-toggle="dropdown"
+                        href="#"
+                      >
+                        <span
+                          class="fa fa-ellipsis-h"
+                          title="Toggle dropdown menu"
+                        ></span>
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li style="margin-left: 13px">
+                          <a
+                            style="color: black"
+                            th:href="@{edit-blog/{id}(id=(${blog.blogId}))}"
+                            ><i class="fa fa-pen"></i> Edit</a
+                          >
+                        </li>
+                        <li style="margin-left: 13px">
+                          <a
+                            style="color: black"
+                            th:href="@{delete-blog/{id}(id=(${blog.blogId}))}"
+                            ><i class="fa fa-trash"></i> Delete</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
                 <p>
                   <i class="fas fa-user-circle" style="font-size: 25px"></i>

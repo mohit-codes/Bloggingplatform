@@ -1,7 +1,5 @@
 package com.bloggingplatform.minorproject.dao;
 
-import java.util.List;
-
 import com.bloggingplatform.minorproject.entities.Blog;
 
 import org.springframework.data.domain.Page;

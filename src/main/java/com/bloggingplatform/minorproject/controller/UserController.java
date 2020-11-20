@@ -1,14 +1,15 @@
 package com.bloggingplatform.minorproject.controller;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+// import java.io.File;
+// import java.nio.file.Files;
+// import java.nio.file.Path;
+// import java.nio.file.Paths;
+// import java.nio.file.StandardCopyOption;
 import java.security.Principal;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+// import java.util.Calendar;
+// import java.util.Date;
+// import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,7 +23,7 @@ import com.bloggingplatform.minorproject.entities.User;
 import com.bloggingplatform.minorproject.helper.Message;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
+// import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,9 +34,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.RequestBody;
+// import org.springframework.web.bind.annotation.RequestParam;
+// import org.springframework.web.multipart.MultipartFile;
+// import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/user")
@@ -236,6 +237,34 @@ public class UserController {
             session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
         }
         return "normal/qna";
+    }
+
+    @RequestMapping("/userblogs/delete-blog/{blogid}")
+    public String delete(@PathVariable("blogid") Integer blogid, Principal principal, Model model,
+            HttpSession session) {
+        try {
+
+            Blog blog = this.blogRepository.findById(blogid).get();
+            User tempUser = this.userRepository.getUserByEmail(principal.getName());
+
+            tempUser.getBlogs().remove(blog);
+            blog.setUser(null);
+
+            this.blogRepository.delete(blog);
+
+            this.userRepository.save(tempUser);
+            System.out.println("Deleted");
+
+            // message success.......
+            session.setAttribute("message", new Message("blog deleted !", "success"));
+        } catch (Exception e) {
+            System.out.println("ERROR " + e.getMessage());
+            e.printStackTrace();
+            // message error
+            session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
+        }
+        return "redirect:/user/userblogs/0";
+
     }
 
 }

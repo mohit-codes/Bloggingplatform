@@ -264,3 +264,7 @@ badge-secondary {
 .answers:focus {
   color: #343a30;
 }
+.dropdown-toggle::after {
+  border-right: none;
+  border-left: none;
+}
