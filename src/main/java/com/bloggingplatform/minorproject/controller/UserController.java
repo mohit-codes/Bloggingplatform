@@ -52,15 +52,15 @@ public class UserController {
     Integer questionId;
 
     @PostMapping("/process-question")
-    public String uploadquestion(@ModelAttribute Question question, Principal principal, HttpSession session) {
+    public String uploadquestion(@ModelAttribute Question question1, Principal principal, HttpSession session) {
         try {
             String asker = principal.getName();
             User questionUser = userRepository.getUserByEmail(asker);
-            questionUser.getQuestions().add(question);
-            question.setUser(questionUser);
-            question.setAsker(questionUser.getFirstName() + ' ' + questionUser.getLastName());
+            questionUser.getQuestions().add(question1);
+            question1.setUser(questionUser);
+            question1.setAsker(questionUser.getFirstName() + ' ' + questionUser.getLastName());
             this.userRepository.save(questionUser);
-            System.out.println("DATA " + question);
+            System.out.println("DATA " + question1);
 
             System.out.println("Added to data base");
             session.setAttribute("message", new Message("Your question is added !", "success"));
@@ -80,7 +80,7 @@ public class UserController {
 
             String email = principal.getName();
             User user = this.userRepository.getUserByEmail(email);
-            System.out.println("length ++++++ " + blog.getContent().length());
+
             // processing and uploading file..
 
             // if (file.isEmpty()) {
@@ -236,11 +236,11 @@ public class UserController {
             // message error
             session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
         }
-        return "normal/qna";
+        return "redirect:/user/qna/answer/" + questionId;
     }
 
     @RequestMapping("/userblogs/delete-blog/{blogid}")
-    public String delete(@PathVariable("blogid") Integer blogid, Principal principal, Model model,
+    public String deleteblog(@PathVariable("blogid") Integer blogid, Principal principal, Model model,
             HttpSession session) {
         try {
 
@@ -264,6 +264,34 @@ public class UserController {
             session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
         }
         return "redirect:/user/userblogs/0";
+
+    }
+
+    @RequestMapping("/userquestions/delete-question/{questionid}")
+    public String deletequestion(@PathVariable("questionid") Integer questionid, Principal principal, Model model,
+            HttpSession session) {
+        try {
+
+            Question question = this.questionRepository.findById(questionid).get();
+            User tempUser = this.userRepository.getUserByEmail(principal.getName());
+
+            tempUser.getQuestions().remove(question);
+            question.setUser(null);
+
+            this.questionRepository.delete(question);
+
+            this.userRepository.save(tempUser);
+            System.out.println("Deleted");
+
+            // message success.......
+            session.setAttribute("message", new Message("question deleted !", "success"));
+        } catch (Exception e) {
+            System.out.println("ERROR " + e.getMessage());
+            e.printStackTrace();
+            // message error
+            session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
+        }
+        return "redirect:/user/userquestions/0";
 
     }
 

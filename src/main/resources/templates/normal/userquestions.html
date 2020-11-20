@@ -112,7 +112,9 @@
                         >
                       </li>
                       <li style="margin-left: 13px">
-                        <a style="color: black" href="#"
+                        <a
+                          style="color: black"
+                          th:href="@{delete-question/{id}(id=(${question.questionId}))}"
                           ><i class="fa fa-trash"></i> Delete</a
                         >
                       </li>
