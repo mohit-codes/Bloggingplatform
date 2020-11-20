@@ -2,64 +2,66 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <body>
     <!-- Modal -->
-    <div th:fragment="form">
+    <div th:fragment="modal">
       <div
-        class=""
-        style="
-          width: fit-content;
-          margin-left: 500px;
-          background-color: black;
-          color: white;
-          border-radius: 5px;
-          padding: 16px;
-        "
+        class="modal fade"
+        id="modelId"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="modelTitleId"
+        aria-hidden="true"
       >
-        <h5 style="text-align: center">WRITE BLOG</h5>
-
-        <form
-          th:object="${blog}"
-          method="POST"
-          th:action="@{/user/process-blog}"
-        >
-          <div class="form-group">
-            <label for="title">Title</label>
-            <input
-              type="text"
-              name="title"
-              id="title"
-              class="form-control"
-              placeholder="Blog Title"
-              aria-describedby="helpId"
-            />
-            <!-- <small id="helpId" class="text-muted">Help text</small> -->
-          </div>
-          <div class="form-group">
-            <label for="topic">Topic</label>
-            <input
-              type="text"
-              name="topic"
-              id="topic"
-              class="form-control"
-              placeholder="Topic"
-              aria-describedby="helpId"
-            />
-            <small id="helpId" class="text-muted"
-              >What your Blog is About</small
-            >
-          </div>
-          <div class="form-group">
-            <label for="date">Date</label>
-            <input
-              type="text"
-              class="form-control"
-              name="date"
-              id="dateid"
-              aria-describedby="helpId"
-              placeholder="Date"
-            />
-          </div>
-          <!--  Image  -->
-          <!-- <div class="form-group">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div style="width: 680px" class="modal-content">
+            <div class="modal-header">
+              <div><h5 style="text-align: center">WRITE BLOG</h5></div>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                <form
+                  th:object="${blog}"
+                  method="POST"
+                  th:action="@{/user/process-blog}"
+                >
+                  <div class="form-group">
+                    <label for="title">Title</label>
+                    <input
+                      type="text"
+                      name="title"
+                      id="title"
+                      class="form-control"
+                      placeholder="Blog Title"
+                      aria-describedby="helpId"
+                    />
+                    <!-- <small id="helpId" class="text-muted">Help text</small> -->
+                  </div>
+                  <div class="form-group">
+                    <label for="topic">Topic</label>
+                    <input
+                      type="text"
+                      name="topic"
+                      id="topic"
+                      class="form-control"
+                      placeholder="Topic"
+                      aria-describedby="helpId"
+                    />
+                    <small id="helpId" class="text-muted"
+                      >What your Blog is About</small
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="date">Date</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="date"
+                      id="dateid"
+                      aria-describedby="helpId"
+                      placeholder="Date"
+                    />
+                  </div>
+                  <!--  Image  -->
+                  <!-- <div class="form-group">
                     <label for="customFile">Image</label>
                     <div class="custom-file">
                       <label
@@ -76,25 +78,28 @@
                       />
                     </div>
                   </div> -->
-          <div class="form-group">
-            <label for="content">Write Here</label>
-            <textarea
-              style="
-                width: 700px;
-                min-height: 100px;
-                overflow: hidden;
-                background-color: white;
-              "
-              name="content"
-              id="content"
-            ></textarea>
+                  <div class="form-group">
+                    <label for="content">Write Here</label>
+                    <textarea
+                      style="
+                        width: 600px;
+                        min-height: 100px;
+                        overflow: hidden;
+                        background-color: white;
+                      "
+                      name="content"
+                      id="content"
+                    ></textarea>
+                  </div>
+                  <div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
-          <div>
-            <button type="submit" class="btn btn-primary">Save</button>
-          </div>
-        </form>
+        </div>
       </div>
-
       <script>
         $(".alert").alert();
       </script>

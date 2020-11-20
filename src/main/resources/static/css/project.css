@@ -189,9 +189,7 @@ badge-secondary {
   background-color: white;
   margin: 0px !important;
   width: 100% !important;
-}
-.text-muted {
-  color: white !important;
+  min-height: 100px !important;
 }
 
 .searchbar {

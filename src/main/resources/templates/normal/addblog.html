@@ -16,29 +16,27 @@
         <a th:href="@{'/user/feed/0'}"
           ><button type="button" class="btn btn-dark">BACK</button>
         </a>
-        
       </div>
       <div
-      class="alert alert-warning alert-dismissible fade show"
-      role="alert"
-      th:if="${session.message}"
-      th:classappend="${session.message.type}"
-      style="padding: 50px; background-color: black; width: fit-content"
-    >
-      <button
-        type="button"
-        class="close"
-        data-dismiss="alert"
-        aria-label="Close"
+        class="alert alert-warning alert-dismissible fade show"
+        role="alert"
+        th:if="${session.message}"
+        th:classappend="${session.message.type}"
+        style="padding: 50px; background-color: black; width: fit-content"
       >
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <strong th:text="${session.message.content}"></strong>
-      <th:block th:text="${#session.removeAttribute('message')}"></th:block>
-    </div>
-      <div >
-        <div th:replace="normal/fragments/formfragment :: form"></div>  
-        </div>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong th:text="${session.message.content}"></strong>
+        <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+      </div>
+      <div>
+        <div th:replace="normal/fragments/formfragment :: modal"></div>
       </div>
     </section>
   </body>

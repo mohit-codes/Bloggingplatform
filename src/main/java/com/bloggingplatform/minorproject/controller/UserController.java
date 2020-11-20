@@ -71,7 +71,7 @@ public class UserController {
             // message error
             session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
         }
-        return "normal/qna";
+        return "redirect:/user/qna/0";
     }
 
     @PostMapping("/process-blog")
@@ -80,7 +80,7 @@ public class UserController {
 
             String email = principal.getName();
             User user = this.userRepository.getUserByEmail(email);
-
+            System.out.println("length ++++++ " + blog.getContent().length());
             // processing and uploading file..
 
             // if (file.isEmpty()) {
@@ -120,7 +120,7 @@ public class UserController {
             // message error
             session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
         }
-        return "normal/addblog";
+        return "redirect:/user/feed/0";
     }
 
     @RequestMapping("/feed/{page}")
@@ -203,13 +203,13 @@ public class UserController {
 
     }
 
-    @GetMapping("/add-blog")
-    public String openblogForm(Model model) {
-        model.addAttribute("title", "Blogging platform");
-        model.addAttribute("blog", new Blog());
+    // @GetMapping("/add-blog")
+    // public String openblogForm(Model model) {
+    // model.addAttribute("title", "Blogging platform");
+    // model.addAttribute("blog", new Blog());
 
-        return "normal/addblog";
-    }
+    // return "normal/addblog";
+    // }
 
     @PostMapping(value = "/process-answer")
     public String postAnswer(@ModelAttribute Answer answer, Principal principal, HttpSession session) {
