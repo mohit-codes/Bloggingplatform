@@ -12,8 +12,16 @@
 
   <body>
     <section>
+      <style>
+        label {
+          color: white;
+          padding: 6px;
+          background: #343a40;
+          border-radius: 10px;
+        }
+      </style>
       <div class="sidenav">
-        <a th:href="@{'/user/qna/0'}"
+        <a th:href="@{'/user/userblogs/0'}"
           ><button type="button" class="btn btn-dark">BACK</button>
         </a>
       </div>
@@ -21,7 +29,7 @@
         style="
           margin: 30px;
           text-align: start;
-
+          margin-right: 123px;
           height: 700px;
           width: 900px;
           float: right;
@@ -106,11 +114,7 @@
           </div>
         </form>
       </div>
-      <script th:inline="javascript">
-        var content = /*[[${blog.content}]]*/ "content";
 
-        $(".nicEdit-main").val(content);
-      </script>
       <script
         src="http://js.nicedit.com/nicEdit-latest.js"
         type="text/javascript"

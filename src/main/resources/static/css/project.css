@@ -190,6 +190,7 @@ badge-secondary {
   margin: 0px !important;
   width: 100% !important;
   min-height: 100px !important;
+  padding: 5px !important;
 }
 
 .searchbar {

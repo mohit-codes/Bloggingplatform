@@ -331,4 +331,20 @@ public class UserController {
         }
         return "redirect:/user/feed/0";
     }
+
+    @RequestMapping(value = "/like/{blogid}")
+    public String doStuffMethod(@PathVariable("blogid") Integer blogid, HttpSession session) {
+        try {
+            Blog blog = this.blogRepository.findById(blogid).get();
+            blog.setLikes(blog.getLikes() + 1);
+            this.blogRepository.save(blog);
+        } catch (Exception e) {
+            System.out.println("ERROR " + e.getMessage());
+            e.printStackTrace();
+            // message error
+            session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
+        }
+        return "redirect:/user/feed/0";
+    }
+
 }
