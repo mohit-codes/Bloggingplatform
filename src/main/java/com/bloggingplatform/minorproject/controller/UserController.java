@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
+import com.bloggingplatform.minorproject.dao.AnswerRepository;
 import com.bloggingplatform.minorproject.dao.BlogRepository;
 import com.bloggingplatform.minorproject.dao.QuestionRepository;
 import com.bloggingplatform.minorproject.dao.UserRepository;
@@ -46,7 +47,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    BlogRepository blogRepository;
+    private BlogRepository blogRepository;
+    @Autowired
+    private AnswerRepository answerRepository;
 
     User usercommon;
     Integer questionId;
@@ -83,7 +86,7 @@ public class UserController {
 
             String email = principal.getName();
             User user = this.userRepository.getUserByEmail(email);
-
+            user.setBlogCount(user.getBlogCount() + 1);
             // processing and uploading file..
 
             // if (file.isEmpty()) {
@@ -206,6 +209,16 @@ public class UserController {
 
     }
 
+    @RequestMapping("/userquestions/answer/{id}")
+    public String viewAns(@PathVariable("id") Integer id, Model model) {
+        Question question = this.questionRepository.findQuestionById(id);
+        questionId = id;
+        model.addAttribute("question", question);
+        model.addAttribute("navTitle", "Answer");
+
+        return "normal/viewanswer";
+
+    }
     // @GetMapping("/add-blog")
     // public String openblogForm(Model model) {
     // model.addAttribute("title", "Blogging platform");
@@ -333,7 +346,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/like/{blogid}")
-    public String doStuffMethod(@PathVariable("blogid") Integer blogid, HttpSession session) {
+    public String blogLikeMethod(@PathVariable("blogid") Integer blogid, HttpSession session) {
         try {
             Blog blog = this.blogRepository.findById(blogid).get();
             blog.setLikes(blog.getLikes() + 1);
@@ -345,6 +358,30 @@ public class UserController {
             session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
         }
         return "redirect:/user/feed/0";
+    }
+
+    @RequestMapping(value = "/answer-like/{answerid}/{type}")
+    public String answerLikeMethod(@PathVariable("answerid") Integer answerid, @PathVariable("type") String type,
+            HttpSession session) {
+        try {
+            Answer answer = this.answerRepository.findById(answerid).get();
+            answer.setUpvotes(answer.getUpvotes() + 1);
+            this.answerRepository.save(answer);
+
+        } catch (Exception e) {
+            System.out.println("ERROR " + e.getMessage());
+            e.printStackTrace();
+            // message error
+            session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
+        }
+        String page;
+
+        if (type.equals("typeA")) {
+            page = "qna";
+        } else {
+            page = "userquestions";
+        }
+        return "redirect:/user/" + page + "/answer/" + questionId;
     }
 
 }

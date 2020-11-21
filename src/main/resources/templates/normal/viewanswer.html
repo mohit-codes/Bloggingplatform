@@ -142,7 +142,7 @@
                     height: fit-content;
                   "
                   class="btn btn-light likebutton"
-                  th:onclick="|window.location.href='/user/answer-like/${answer.answerId}/typeA'|"
+                  th:onclick="|window.location.href='/user/answer-like/${answer.answerId}/typeB'|"
                 >
                   <svg width="24px" height="24px" viewBox="0 0 24 24">
                     <g
@@ -162,65 +162,9 @@
                 </button>
               </div>
             </div>
-            <div>
-              <form
-                th:object="${answer}"
-                method="POST"
-                th:action="@{/user/process-answer}"
-              >
-                <div class="form-group">
-                  <label style="font-size: 14px" for="content"
-                    >Write Your Answer</label
-                  >
-                  <textarea
-                    style="width: 100%"
-                    class="form-control"
-                    name="content"
-                    id="content"
-                    rows="5"
-                  ></textarea>
-                </div>
-                <div style="text-align: end" class="container">
-                  <button
-                    style="margin-left: auto"
-                    type="submit"
-                    class="btn btn-dark"
-                  >
-                    Submit
-                  </button>
-                </div>
-              </form>
-            </div>
           </div>
         </div>
       </div>
-      <script
-        src="http://js.nicedit.com/nicEdit-latest.js"
-        type="text/javascript"
-      ></script>
-      <script src="src/nicSelect/nicSelect.js" type="text/javascript"></script>
-
-      <script type="text/javascript">
-        bkLib.onDomLoaded(function () {
-          new nicEditor({
-            buttonList: [
-              "ul",
-              "ol",
-              "bold",
-              "italic",
-              "underline",
-              "strikeThrough",
-              "subscript",
-              "superscript",
-              "html",
-              "quoteblock",
-              "left",
-              "center",
-              "right",
-            ],
-          }).panelInstance("content");
-        });
-      </script>
     </section>
   </body>
 </html>
