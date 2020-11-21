@@ -21,7 +21,7 @@ public class Question {
     private int questionId;
     private String date;
     private String asker;
-    private String question;
+    private String title;
     private String topic;
     // many questions can have one user
     @ManyToOne
@@ -71,20 +71,20 @@ public class Question {
         this.user = user;
     }
 
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
     public String getTopic() {
         return topic;
     }
 
     public void setTopic(String topic) {
         this.topic = topic;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
 }

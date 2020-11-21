@@ -103,4 +103,10 @@ public class Blog {
         this.user = user;
     }
 
+    @Override
+    public String toString() {
+        return "Blog [author=" + author + ", blogId=" + blogId + ", content=" + content + ", date=" + date + ", image="
+                + image + ", likes=" + likes + ", title=" + title + ", topic=" + topic + ", user=" + user + "]";
+    }
+
 }

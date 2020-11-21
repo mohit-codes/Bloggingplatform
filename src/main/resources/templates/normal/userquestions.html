@@ -46,7 +46,13 @@
           role="alert"
           th:if="${session.message}"
           th:classappend="${session.message.type}"
-          style="padding: 50px; background-color: black; width: fit-content"
+          style="
+            padding: 20px;
+            background-color: #334;
+            border-radius: 17px;
+            text-align: center;
+            width: auto;
+          "
         >
           <button
             type="button"
@@ -90,7 +96,7 @@
               <div style="display: flex">
                 <div
                   style="font-size: 25px; font-weight: 800"
-                  th:text="${question.question}"
+                  th:text="${question.title}"
                 ></div>
                 <div style="margin-left: auto">
                   <div class="btn-group open">

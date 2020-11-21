@@ -22,7 +22,13 @@
         role="alert"
         th:if="${session.message}"
         th:classappend="${session.message.type}"
-        style="padding: 50px; background-color: black; width: fit-content"
+        style="
+          padding: 20px;
+          background-color: #334;
+          border-radius: 17px;
+          text-align: center;
+          width: auto;
+        "
       >
         <button
           type="button"

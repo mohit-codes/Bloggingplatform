@@ -51,12 +51,15 @@ public class UserController {
     User usercommon;
     Integer questionId;
 
-    @PostMapping("/process-question")
+    @PostMapping(value = "/process-question")
     public String uploadquestion(@ModelAttribute Question question1, Principal principal, HttpSession session) {
         try {
             String asker = principal.getName();
             User questionUser = userRepository.getUserByEmail(asker);
             questionUser.getQuestions().add(question1);
+            String today = java.time.LocalDate.now().toString();
+
+            question1.setDate(today.substring(8) + "-" + today.substring(5, 7) + "-" + today.substring(0, 4));
             question1.setUser(questionUser);
             question1.setAsker(questionUser.getFirstName() + ' ' + questionUser.getLastName());
             this.userRepository.save(questionUser);
@@ -71,10 +74,10 @@ public class UserController {
             // message error
             session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
         }
-        return "redirect:/user/qna/0";
+        return "redirect:/user/userquestions/0";
     }
 
-    @PostMapping("/process-blog")
+    @PostMapping(value = "/process-blog")
     public String uploadblog(@ModelAttribute Blog blog, Principal principal, HttpSession session) {
         try {
 
@@ -295,4 +298,37 @@ public class UserController {
 
     }
 
+    @RequestMapping("/userblogs/edit-blog/{blogid}")
+    public String editBlog(@PathVariable("blogid") Integer blogid, Model model) {
+        Blog blog = this.blogRepository.findById(blogid).get();
+        model.addAttribute("id", blogid);
+        model.addAttribute("blog", blog);
+        model.addAttribute("navTitle", "Edit Blog");
+
+        return "normal/editblog";
+
+    }
+
+    @PostMapping(value = "/userblogs/process-edit-blog/{blogid}")
+    public String editblog(@PathVariable("blogid") Integer blogid, @ModelAttribute Blog blog, Principal principal,
+            HttpSession session) {
+        try {
+            Blog oldblog = this.blogRepository.findById(blogid).get();
+            oldblog.setTitle(blog.getTitle());
+            oldblog.setTopic(blog.getTopic());
+            oldblog.setContent(blog.getContent());
+            this.blogRepository.save(oldblog);
+
+            System.out.println("Added to data base");
+
+            // message success.......
+            session.setAttribute("message", new Message("Your Blog is updated !", "success"));
+        } catch (Exception e) {
+            System.out.println("ERROR " + e.getMessage());
+            e.printStackTrace();
+            // message error
+            session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
+        }
+        return "redirect:/user/feed/0";
+    }
 }
