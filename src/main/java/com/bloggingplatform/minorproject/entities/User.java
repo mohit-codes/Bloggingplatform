@@ -153,14 +153,6 @@ public class User {
         this.questions = questions;
     }
 
-    @Override
-    public String toString() {
-        return "User [about=" + about + ", blogCount=" + blogCount + ", blogs=" + blogs + ", email=" + email
-                + ", enabled=" + enabled + ", firstName=" + firstName + ", id=" + id + ", imageUrl=" + imageUrl
-                + ", lastName=" + lastName + ", password=" + password + ", questions=" + questions + ", role=" + role
-                + "]";
-    }
-
     public String getConfirmPassword() {
         return confirmPassword;
     }

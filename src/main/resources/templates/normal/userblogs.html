@@ -26,9 +26,16 @@
         <a th:href="@{/user/feed/0}"
           ><button type="button" class="btn btn-dark">HOME</button>
         </a>
-        <a href="#"
-          ><button type="button" class="btn btn-dark">LIKES</button>
-        </a>
+        <button
+          type="button"
+          class="btn btn-dark"
+          data-toggle="modal"
+          data-target="#likemodelId"
+          style="margin-left: 16px"
+        >
+          LIKES
+        </button>
+
         <a th:href="@{/user/profile}"
           ><button type="button" class="btn btn-dark">PROFILE</button>
         </a>
@@ -38,6 +45,9 @@
       </div>
       <div>
         <div th:replace="normal/fragments/formfragment :: modal"></div>
+      </div>
+      <div>
+        <div th:replace="normal/fragments/likesfragment :: likeModal"></div>
       </div>
       <div class="feed">
         <div

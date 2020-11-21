@@ -12,7 +12,31 @@
 
   <body>
     <section style="display: flex">
-      <div style="margin-left: 150px">
+      <div
+        class="alert alert-warning alert-dismissible fade show"
+        role="alert"
+        th:if="${session.message}"
+        th:classappend="${session.message.type}"
+        style="
+          padding: 20px;
+          background-color: #334;
+          border-radius: 17px;
+          text-align: center;
+          width: 500px;
+        "
+      >
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong th:text="${session.message.content}"></strong>
+        <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+      </div>
+      <div style="margin-left: 150px; margin-top: 35px">
         <i class="fas fa-user-circle" style="font-size: 130px"></i>
         <div
           style="
@@ -29,31 +53,77 @@
           <span th:text="${user.firstName}"></span>
           <span th:text="${user.lastName}"></span>
         </div>
+        <div
+          style="
+            width: fit-content;
+            height: 34px;
+            padding: 4px 20px 1px 20px;
+            background-color: aliceblue;
+            border-radius: 20px;
+            margin-top: 10px;
+            border: 1px solid black;
+            opacity: 0.9;
+          "
+        >
+          <span th:text="${user.blogCount}"></span>
+          <span>Blogs</span>
+        </div>
       </div>
       <div
         style="
           height: 550px;
-          margin-left: 50px;
+          margin-left: 16px;
           width: 700px;
           opacity: 0.9;
           background-color: aliceblue;
           font-size: 19px;
-          padding: 51px 0px 0px 65px;
+          padding: 39px;
           border-radius: 56px;
+          margin-top: 33px;
         "
       >
-        <div style="margin-bottom: 10px">
-          <span>FIRST NAME : </span><span th:text="${user.firstName}"></span>
-        </div>
-        <div style="margin-bottom: 10px">
-          <span>LAST NAME : </span><span th:th:text="${user.lastName}"></span>
-        </div>
-        <div style="margin-bottom: 10px">
-          <span>EMAIL : </span><span th:text="${user.email}"></span>
-        </div>
-        <div style="margin-bottom: 10px">
-          <span>ABOUT : </span><span th:th:text="${user.about}"></span>
-        </div>
+        <form
+          th:object="${user}"
+          th:action="@{/user/profile-update/{id}(id=(${user.id}))}"
+          method="post"
+        >
+          <div class="form-group">
+            <label for="firstName">First Name </label>
+            <input
+              type="text"
+              name="firstName"
+              id="firstName"
+              class="form-control"
+              placeholder="First Name"
+              aria-describedby="helpId"
+              th:value="${user.firstName}"
+            />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              class="form-control"
+              placeholder="Last Name"
+              aria-describedby="helpId"
+              th:value="${user.lastName}"
+            />
+          </div>
+          <div class="form-group">
+            <label for="about">About</label>
+            <textarea
+              class="form-control"
+              name="about"
+              id="about"
+              rows="3"
+              th:text="${user.about}"
+            ></textarea>
+            <small id="helpId" class="text-muted"></small>
+          </div>
+          <button type="submit" class="btn btn-dark">Update</button>
+        </form>
       </div>
       <div
         style="
@@ -69,12 +139,28 @@
             type="button"
             class="btn btn-dark"
           >
-            DEACTIVATE ACCOUNT
-          </button> </a
-        ><a th:href="@{/logout}"
+            Contact Us
+          </button>
+        </a>
+        <a th:href="@{/logout}"
           ><button type="button" class="btn btn-dark">LOGOUT</button> </a
         ><a href="#"
           ><button type="button" class="btn btn-dark">SETTINGS</button>
+        </a>
+        <a href="#"
+          ><button
+            style="width: fit-content"
+            type="button"
+            class="btn btn-dark"
+          >
+            DEACTIVATE ACCOUNT
+          </button>
+        </a>
+
+        <a href="#">
+          <button style="width: fit-content" type="button" class="btn btn-dark">
+            Terms and Conditions
+          </button>
         </a>
       </div>
     </section>

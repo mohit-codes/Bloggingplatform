@@ -1,15 +1,6 @@
 package com.bloggingplatform.minorproject.controller;
 
-// import java.io.File;
-// import java.nio.file.Files;
-// import java.nio.file.Path;
-// import java.nio.file.Paths;
-// import java.nio.file.StandardCopyOption;
 import java.security.Principal;
-// import java.util.Calendar;
-// import java.util.Date;
-// import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,13 +15,13 @@ import com.bloggingplatform.minorproject.entities.User;
 import com.bloggingplatform.minorproject.helper.Message;
 
 import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.core.io.ClassPathResource;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -382,6 +373,30 @@ public class UserController {
             page = "userquestions";
         }
         return "redirect:/user/" + page + "/answer/" + questionId;
+    }
+
+    @PostMapping(value = "/profile-update/{id}")
+    public String upldateprofile(@PathVariable("id") Integer id, @ModelAttribute User user, HttpSession session) {
+        try {
+            User userObj = this.userRepository.findById(id).get();
+
+            userObj.setFirstName(user.getFirstName());
+            userObj.setLastName(user.getLastName());
+            userObj.setAbout(user.getAbout());
+
+            this.userRepository.save(userObj);
+            System.out.println("DATA " + userObj.getAbout() + userObj.getFirstName());
+
+            System.out.println("Added to data base");
+            session.setAttribute("message", new Message("Details Updated!", "success"));
+
+        } catch (Exception e) {
+            System.out.println("ERROR " + e.getMessage());
+            e.printStackTrace();
+            // message error
+            session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
+        }
+        return "redirect:/user/userblogs/0";
     }
 
 }
