@@ -12,31 +12,39 @@
 
   <body>
     <section>
+      <form
+        th:object="${question}"
+        method="POST"
+        th:action="@{/qna/search-topic}"
+      >
+        <div class="searchbar">
+          <input
+            style="
+              color: white;
+              border: none !important;
+              background-color: #343a40 !important;
+              box-shadow: none !important;
+              border-radius: 50%;
+            "
+            class="search_input"
+            type="text"
+            name="topic"
+            placeholder="Search topic"
+          />
+          <a role="button" type="submit" class="search_icon"
+            ><i class="fas fa-search" style="color: black"></i
+          ></a>
+        </div>
+      </form>
       <div class="sidenav">
-        <a th:href="@{/user/userquestions/0}"
-          ><button
-            style="height: fit-content"
-            type="button"
-            class="btn btn-dark"
-          >
-            ASKED QUESTIONS
-          </button>
+        <a th:href="@{/login}"
+          ><button type="button" class="btn btn-dark">LOGIN</button>
         </a>
-        <button
-          type="button"
-          class="btn btn-dark"
-          data-toggle="modal"
-          data-target="#modelId"
-          style="margin-left: 16px"
-        >
-          ADD QUESTION
-        </button>
-
-        <a th:href="@{/user/feed/0}"
-          ><button type="button" class="btn btn-dark">HOME</button>
+        <a th:href="@{/register}"
+          ><button type="button" class="btn btn-dark">REGISTER</button>
         </a>
-        <a href="/logout"
-          ><button type="button" class="btn btn-dark">LOGOUT</button>
+        <a th:href="@{/home}"
+          ><button type="button" class="btn btn-dark">BACK</button>
         </a>
       </div>
       <div th:replace="normal/fragments/questionfragment :: modal"></div>
@@ -89,7 +97,7 @@
             >
               <div
                 style="font-size: 25px; font-weight: 800"
-                th:text="${question.question}"
+                th:text="${question.title}"
               ></div>
               <p>
                 <strong>Asker: </strong><a th:text="${question.asker}"></a>
@@ -101,26 +109,34 @@
                     <span class="badge badge-secondary"
                       >Topic : <span th:text="${question.topic}"></span
                     ></span>
-                    <span
-                      style="text-transform: capitalize"
-                      class="badge badge-secondary"
-                    ></span>
                   </span>
                 </div>
-              </p>
-              <!-- th:utext for html parsing -->
-              <div th:each="answer : ${question.answers}">
-                <div th:text="${answer.author}"></div>
-                <div>
-                  <span class="badge badge-secondary"
-                    >Created : <span th:text="${answer.date}"></span
-                  ></span>
+                <div
+                  style="
+                    font-size: 17px;
+                    font-weight: 800;
+                    padding: 12px 0px 0px 9px;
+                  "
+                >
+                  <a
+                    class="answers"
+                    th:href="@{qna/answer/{id}(id=(${question.questionId}))}"
+                    style="color: #334e33"
+                  >
+                    <span
+                      style="margin-right: 2px"
+                      th:if="${question.getAnswers().isEmpty()}"
+                      >Not yet answered</span
+                    ><span
+                      style="margin-right: 2px"
+                      th:if="${!question.getAnswers().isEmpty()}"
+                      ><span th:text="${question.getAnswers().size()}"></span
+                      ><span style="margin-left: 8px" th:text="Answer"></span
+                    ></span>
+                  </a>
                 </div>
-                <h6 th:remove="tag" th:utext="${answer.content}"></h6>
-              </div>
+              </p>
             </div>
-            <!-- <div><span th:text="${blog.title}"> Title </span></div>
-          <div><span th:text="${blog.author}"> Author </span></div> -->
           </th:block>
         </div>
       </div>

@@ -12,77 +12,12 @@
 
   <body>
     <section>
-      <form
-        th:object="${question}"
-        method="POST"
-        th:action="@{/user/qna/search-topic}"
-      >
-        <div class="searchbar">
-          <input
-            style="
-              color: white;
-              border: none !important;
-              background-color: #343a40 !important;
-              box-shadow: none !important;
-              border-radius: 50%;
-            "
-            class="search_input"
-            type="text"
-            name="topic"
-            placeholder="Search topic"
-          />
-          <a role="button" type="submit" class="search_icon"
-            ><i class="fas fa-search" style="color: black"></i
-          ></a>
-        </div>
-      </form>
       <div class="sidenav">
-        <a th:href="@{/user/userquestions/0}"
-          ><button
-            style="height: fit-content"
-            type="button"
-            class="btn btn-dark"
-          >
-            ASKED QUESTIONS
-          </button>
-        </a>
-        <button
-          type="button"
-          class="btn btn-dark"
-          data-toggle="modal"
-          data-target="#modelId"
-          style="margin-left: 16px"
-        >
-          ADD QUESTION
-        </button>
-
-        <a th:href="@{/user/feed/0}"
-          ><button type="button" class="btn btn-dark">HOME</button>
-        </a>
-        <a href="/logout"
-          ><button type="button" class="btn btn-dark">LOGOUT</button>
+        <a th:href="@{'/user/qna/0'}"
+          ><button type="button" class="btn btn-dark">BACK</button>
         </a>
       </div>
-      <div th:replace="normal/fragments/questionfragment :: modal"></div>
-      <div class="feed" style="text-align: -webkit-center">
-        <div
-          class="alert alert-warning alert-dismissible fade show"
-          role="alert"
-          th:if="${session.message}"
-          th:classappend="${session.message.type}"
-          style="padding: 50px; background-color: black; width: fit-content"
-        >
-          <button
-            type="button"
-            class="close"
-            data-dismiss="alert"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <strong th:text="${session.message.content}"></strong>
-          <th:block th:text="${#session.removeAttribute('message')}"></th:block>
-        </div>
+      <div class="feed">
         <div
           style="
             margin: 30px;
@@ -95,10 +30,7 @@
             padding-bottom: 70px;
           "
         >
-          <!-- <div th:if="${blogs.empty}">
-          <span>No Blogs Available</span>
-        </div> -->
-          <th:block th:each="question : ${questions}">
+          <th:block th:each="question : ${questionList}">
             <div
               style="
                 margin-right: 10px;

@@ -1,6 +1,7 @@
 package com.bloggingplatform.minorproject.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -399,4 +400,39 @@ public class UserController {
         return "redirect:/user/userblogs/0";
     }
 
+    @PostMapping(value = "/feed/search-topic")
+    public String searchByTopic(@ModelAttribute Blog tempObj, HttpSession session, Model model) {
+        try {
+            String topic = tempObj.getTopic();
+            List<Blog> bloglist = this.blogRepository.findAllByTopic(topic);
+            // System.out.println(topic);
+            model.addAttribute("navTitle", bloglist.size() + " Results for " + topic);
+            model.addAttribute("bloglist", bloglist);
+
+        } catch (Exception e) {
+            System.out.println("ERROR " + e.getMessage());
+            e.printStackTrace();
+            // message error
+            session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
+        }
+        return "normal/blogTopic";
+    }
+
+    @PostMapping(value = "/qna/search-topic")
+    public String qnaSearchByTopic(@ModelAttribute Question tempObj, HttpSession session, Model model) {
+        try {
+            String topic = tempObj.getTopic();
+            List<Question> questionList = this.questionRepository.findAllByTopic(topic);
+            // System.out.println(topic);
+            model.addAttribute("navTitle", questionList.size() + " Results for " + topic);
+            model.addAttribute("questionList", questionList);
+
+        } catch (Exception e) {
+            System.out.println("ERROR " + e.getMessage());
+            e.printStackTrace();
+            // message error
+            session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
+        }
+        return "normal/qnaTopic";
+    }
 }

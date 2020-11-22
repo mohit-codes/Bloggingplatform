@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="base::layout(~{::section})"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Blogging platform</title>
+    <link rel="stylesheet" th:href="@{/css/project.css}" />
+  </head>
+
+  <body>
+    <section>
+      <div class="sidenav">
+        <a th:href="@{'/qna'}"
+          ><button type="button" class="btn btn-dark">BACK</button>
+        </a>
+      </div>
+      <div
+        class="alert alert-warning alert-dismissible fade show"
+        role="alert"
+        th:if="${session.message}"
+        th:classappend="${session.message.type}"
+        style="
+          padding: 20px;
+          background-color: #334;
+          border-radius: 17px;
+          text-align: center;
+          width: auto;
+        "
+      >
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong th:text="${session.message.content}"></strong>
+        <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+      </div>
+      <div>
+        <div
+          style="
+            margin: 30px;
+            text-align: start;
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: 100vh;
+            width: 1200px;
+            float: right;
+            padding-bottom: 70px;
+          "
+        >
+          <div
+            style="
+              margin-right: 10px;
+              padding: 16px 16px 4px 16px;
+              box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+              border-radius: 5px;
+              background-color: whitesmoke;
+              float: right;
+              width: -webkit-fill-available;
+              margin-bottom: 25px;
+            "
+          >
+            <div
+              style="font-size: 25px; font-weight: 800"
+              th:text="${question.title}"
+            ></div>
+            <div>
+              <span
+                ><i class="fas fa-user-circle" style="font-size: 25px"></i
+              ></span>
+              <strong>Asker: </strong><a th:text="${question.asker}"></a>
+              <div style="font-size: 18px">
+                <span>
+                  <span class="badge badge-secondary"
+                    >Created : <span th:text="${question.date}"></span
+                  ></span>
+                  <span class="badge badge-secondary"
+                    >Topic : <span th:text="${question.topic}"></span
+                  ></span>
+                  <span
+                    style="text-transform: capitalize"
+                    class="badge badge-secondary"
+                  ></span>
+                </span>
+              </div>
+            </div>
+            <div
+              style="
+                border-top: groove;
+                border-bottom: groove;
+                padding: 10px;
+                margin: 10px 0px 15px 0px;
+                font-weight: 700;
+              "
+            >
+              <span
+                style="margin-right: 2px"
+                th:if="${question.getAnswers().isEmpty()}"
+                >Not yet answered</span
+              ><span
+                style="margin-right: 2px"
+                th:if="${!question.getAnswers().isEmpty()}"
+              >
+                <span th:text="${question.getAnswers().size()}"></span
+                ><span style="margin-left: 8px" th:text="Answer"></span
+              ></span>
+            </div>
+            <!-- th:utext for html parsing -->
+            <div
+              style="border-bottom: groove; margin-bottom: 30px"
+              th:each="answer : ${question.getAnswers()}"
+            >
+              <div style="margin-bottom: 7px">
+                <i class="fas fa-user-circle" style="font-size: 25px"></i
+                ><span
+                  style="margin-left: 11px"
+                  th:text="${answer.author}"
+                ></span>
+              </div>
+              <div style="margin-bottom: 12px">
+                <span class="badge badge-secondary"
+                  >Created : <span th:text="${answer.date}"></span
+                ></span>
+              </div>
+              <div style="padding: 10px; margin-bottom: 15px">
+                <h6 th:remove="tag" th:utext="${answer.content}"></h6>
+              </div>
+              <div>
+                <button
+                  style="
+                    width: 54px;
+                    border: 1px solid black;
+                    background-color: transparent;
+                    padding: 2px;
+                    border-radius: 15px;
+                    height: fit-content;
+                  "
+                  class="btn btn-light likebutton"
+                  th:onclick="|window.location.href='/user/answer-like/${answer.answerId}/typeB'|"
+                >
+                  <svg width="24px" height="24px" viewBox="0 0 24 24">
+                    <g
+                      id="upvote"
+                      class="icon_svg-stroke icon_svg-fill arrowicon"
+                      stroke-width="1.5"
+                      stroke="#666"
+                      fill="none"
+                      fill-rule="evenodd"
+                      stroke-linejoin="round"
+                    >
+                      <polygon
+                        points="12 4 3 15 9 15 9 20 15 20 15 15 21 15"
+                      ></polygon>
+                    </g></svg
+                  ><span th:text="${answer.upvotes}"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

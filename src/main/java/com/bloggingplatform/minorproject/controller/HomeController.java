@@ -9,6 +9,7 @@ import com.bloggingplatform.minorproject.dao.QuestionRepository;
 import com.bloggingplatform.minorproject.dao.UserRepository;
 import com.bloggingplatform.minorproject.entities.User;
 import com.bloggingplatform.minorproject.helper.Message;
+
 import com.bloggingplatform.minorproject.entities.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,13 +35,24 @@ public class HomeController {
     @Autowired
     private QuestionRepository questionRepository;
 
+    // qna handler
     @RequestMapping("/qna")
     public String qna(Model model) {
 
         List<Question> questions = this.questionRepository.findAll();
-
+        model.addAttribute("navTitle", "QnA Section");
         model.addAttribute("questions", questions);
         return "qna";
+    }
+
+    // qna-answer handler
+    @RequestMapping("/qna/answer/{questionId}")
+    public String answers(@PathVariable("questionId") Integer questionId, Model model) {
+        Question questionObj = this.questionRepository.findQuestionById(questionId);
+
+        model.addAttribute("navTitle", "Answers");
+        model.addAttribute("question", questionObj);
+        return "publicViewAnswer";
     }
 
     // home handler
@@ -60,6 +74,25 @@ public class HomeController {
     public String customLogin(Model model) {
         model.addAttribute("title", "login");
         return "login";
+    }
+
+    // qna topic search
+    @PostMapping(value = "/qna/search-topic")
+    public String qnaSearchByTopic(@ModelAttribute Question tempObj, HttpSession session, Model model) {
+        try {
+            String topic = tempObj.getTopic();
+            List<Question> questionList = this.questionRepository.findAllByTopic(topic);
+            // System.out.println(topic);
+            model.addAttribute("navTitle", questionList.size() + " Results for " + topic);
+            model.addAttribute("questionList", questionList);
+
+        } catch (Exception e) {
+            System.out.println("ERROR " + e.getMessage());
+            e.printStackTrace();
+            // message error
+            session.setAttribute("message", new Message("Something went wrong ! Try again..", "danger"));
+        }
+        return "qnaTopic";
     }
 
     // handler for user register

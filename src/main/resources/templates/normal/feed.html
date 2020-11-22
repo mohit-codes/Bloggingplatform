@@ -12,9 +12,8 @@
 
   <body>
     <section>
-      //controller bna ***********
       <form
-        th:object="${topic}"
+        th:object="${blog}"
         method="POST"
         th:action="@{/user/feed/search-topic}"
       >
@@ -35,7 +34,7 @@
             name="topic"
             placeholder="Search topic"
           />
-          <a href="#" class="search_icon"
+          <a role="button" type="submit" class="search_icon"
             ><i class="fas fa-search" style="color: black"></i
           ></a>
         </div>

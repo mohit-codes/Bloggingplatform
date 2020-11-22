@@ -1,5 +1,7 @@
 package com.bloggingplatform.minorproject.dao;
 
+import java.util.List;
+
 import com.bloggingplatform.minorproject.entities.Question;
 
 import org.springframework.data.domain.Page;
@@ -17,4 +19,7 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
     @Query("select q from Question q where q.user.id = :userid")
     Page<Question> findByUserId(@Param("userid") Integer userid, Pageable pePageable);
+
+    @Query("select q from Question q where q.topic = :topic")
+    public List<Question> findAllByTopic(@Param("topic") String topic);
 }

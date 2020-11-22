@@ -1,5 +1,7 @@
 package com.bloggingplatform.minorproject.dao;
 
+import java.util.List;
+
 import com.bloggingplatform.minorproject.entities.Blog;
 
 import org.springframework.data.domain.Page;
@@ -15,4 +17,6 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
     @Query("select b from Blog b where b.user.id = :userid")
     public Page<Blog> findByEmail(@Param("userid") Integer userid, Pageable pePageable);
 
+    @Query("select b from Blog b where b.topic = :topic")
+    public List<Blog> findAllByTopic(@Param("topic") String topic);
 }
