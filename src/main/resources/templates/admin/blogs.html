@@ -27,7 +27,10 @@
             <td th:text="${blog.likes}"></td>
             <td th:text="${blog.author}"></td>
             <td>
-              <a name="" id="" class="btn btn-dark" href="#" role="button"
+              <a
+                class="btn btn-dark"
+                th:href="@{blogs/delete-blog/{id}(id=(${blog.blogId}))}"
+                role="button"
                 >Delete</a
               >
             </td>

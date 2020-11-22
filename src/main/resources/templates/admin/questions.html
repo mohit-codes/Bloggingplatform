@@ -29,7 +29,10 @@
             <td th:text="${question.asker}"></td>
             <td th:text="${question.user.id}"></td>
             <td>
-              <a name="" id="" class="btn btn-dark" href="#" role="button"
+              <a
+                class="btn btn-dark"
+                th:href="@{questions/delete-question/{id}(id=(${question.questionId}))}"
+                role="button"
                 >Delete</a
               >
             </td>
