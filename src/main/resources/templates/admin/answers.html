@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="admin/base::layout(~{::section})"
+>
+  <body>
+    <section>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">QuestionID</th>
+            <th scope="col">upvotes</th>
+            <th scope="col">date</th>
+            <th scope="col">author</th>
+            <th scope="col">action</th>
+          </tr>
+        </thead>
+        <tbody th:each="answer : ${answers}">
+          <tr>
+            <td scope="row" th:text="${answer.answerId}"></td>
+            <td th:text="${answer.getQuestion().questionId}"></td>
+            <td th:text="${answer.upvotes}"></td>
+            <td th:text="${answer.date}"></td>
+
+            <td th:text="${answer.author}"></td>
+            <td>
+              <a name="" id="" class="btn btn-dark" href="#" role="button"
+                >Delete</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </body>
+</html>

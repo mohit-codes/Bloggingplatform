@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="admin/base::layout(~{::section})"
+>
+  <body>
+    <section>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">title</th>
+            <th scope="col">topic</th>
+            <th scope="col">date</th>
+            <th scope="col">#likes</th>
+            <th scope="col">author</th>
+            <th scope="col">action</th>
+          </tr>
+        </thead>
+        <tbody th:each="blog : ${blogs}">
+          <tr>
+            <td scope="row" th:text="${blog.blogId}"></td>
+            <td th:text="${blog.title}"></td>
+            <td th:text="${blog.topic}"></td>
+            <td th:text="${blog.date}"></td>
+            <td th:text="${blog.likes}"></td>
+            <td th:text="${blog.author}"></td>
+            <td>
+              <a name="" id="" class="btn btn-dark" href="#" role="button"
+                >Delete</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </body>
+</html>

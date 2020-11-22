@@ -76,6 +76,15 @@ public class HomeController {
         return "login";
     }
 
+    @GetMapping("/admin")
+    public String adminLogin(Model model) {
+        List<User> allUsers = this.userRepository.findAll();
+
+        model.addAttribute("users", allUsers);
+        model.addAttribute("title", "ADMIN");
+        return "admin/dashboard";
+    }
+
     // qna topic search
     @PostMapping(value = "/qna/search-topic")
     public String qnaSearchByTopic(@ModelAttribute Question tempObj, HttpSession session, Model model) {
@@ -119,6 +128,7 @@ public class HomeController {
             user.setRole("ROLE_USER");
             user.setEnabled(true);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setConfirmPassword(passwordEncoder.encode(user.getConfirmPassword()));
             System.out.println("agreement" + agreement);
             System.out.println("User" + user);
 
