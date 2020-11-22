@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <!-- Modal -->
+    <div th:fragment="settingsModal">
+      <style>
+        a {
+          border: none !important;
+          background-color: none !important;
+        }
+        button {
+          height: fit-content !important;
+        }
+      </style>
+      <div
+        class="modal fade"
+        id="modelId"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="modelTitleId"
+        aria-hidden="true"
+      >
+        <div
+          class="modal-dialog modal-dialog-centered modal-lg"
+          role="document"
+        >
+          <div class="modal-content">
+            <div
+              class="modal-header"
+              style="align-self: center; padding: 16px 0px 10px 0px"
+            >
+              <h5 class="modal-title">Settings</h5>
+            </div>
+            <div style="height: 430px; display: flex" class="modal-body">
+              <div
+                style="width: fit-content"
+                id="list-example"
+                class="list-group"
+              >
+                <div>
+                  <a
+                    class="list-group-item list-group-item-action"
+                    href="#list-item-2"
+                    ><button
+                      style="width: fit-content"
+                      type="button"
+                      class="btn btn-dark"
+                    >
+                      Terms and Conditions
+                    </button></a
+                  >
+                </div>
+                <div style="text-align: center">
+                  <a
+                    class="list-group-item list-group-item-action"
+                    href="#list-item-1"
+                    ><button
+                      style="width: fit-content"
+                      type="button"
+                      class="btn btn-dark"
+                    >
+                      Contact Us
+                    </button></a
+                  >
+                </div>
+              </div>
+              <div
+                style="overflow: scroll; width: fit-content"
+                data-spy="scroll"
+                data-target="#list-example"
+                data-offset="0"
+                class="scrollspy-example"
+              >
+                <div>
+                  <h4 id="list-item-2">Terms & Conditions</h4>
+                  <p>
+                    Our mission is to share and grow the world’s knowledge. The
+                    Quora platform offers a place to ask questions and connect
+                    with people who contribute unique insights and quality
+                    answers. This empowers people to learn from each other and
+                    to better understand the world. You own the content that you
+                    post; you also grant us and other users of the Quora
+                    platform certain rights and license to use it.
+                  </p>
+                </div>
+                <div>
+                  <h4 id="list-item-1">Contact Us</h4>
+                  <p>
+                    ........................................................
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

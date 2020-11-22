@@ -202,6 +202,10 @@ badge-secondary {
   background-color: #353b48 !important;
   border-radius: 30px !important;
   padding: 10px !important;
+  position: absolute;
+  right: 10px;
+  top: 44px;
+  width: fit-content;
 }
 
 .search_input {
@@ -266,4 +270,8 @@ badge-secondary {
 .dropdown-toggle::after {
   border-right: none;
   border-left: none;
+}
+.list-group-item.active {
+  background-color: #fff !important;
+  border-color: #fff !important;
 }

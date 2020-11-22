@@ -12,6 +12,34 @@
 
   <body>
     <section>
+      //controller bna ***********
+      <form
+        th:object="${topic}"
+        method="POST"
+        th:action="@{/user/feed/search-topic}"
+      >
+        <div
+          class="searchbar"
+          th:style="${hide} ? 'display:none' : 'display block' "
+        >
+          <input
+            style="
+              color: white;
+              border: none !important;
+              background-color: #343a40 !important;
+              box-shadow: none !important;
+              border-radius: 50%;
+            "
+            class="search_input"
+            type="text"
+            name="topic"
+            placeholder="Search topic"
+          />
+          <a href="#" class="search_icon"
+            ><i class="fas fa-search" style="color: black"></i
+          ></a>
+        </div>
+      </form>
       <div class="sidenav">
         <a th:href="@{'/user/userblogs/0'}"
           ><button type="button" class="btn btn-dark">YOUR BLOGS</button>

@@ -69,6 +69,11 @@
           <span>Blogs</span>
         </div>
       </div>
+      <div>
+        <div
+          th:replace="normal/fragments/settingfragment :: settingsModal"
+        ></div>
+      </div>
       <div
         style="
           height: 550px;
@@ -133,20 +138,18 @@
           flex-direction: column;
         "
       >
-        <a href="#"
-          ><button
-            style="width: fit-content"
-            type="button"
-            class="btn btn-dark"
-          >
-            Contact Us
-          </button>
-        </a>
         <a th:href="@{/logout}"
-          ><button type="button" class="btn btn-dark">LOGOUT</button> </a
-        ><a href="#"
-          ><button type="button" class="btn btn-dark">SETTINGS</button>
+          ><button type="button" class="btn btn-dark">LOGOUT</button>
         </a>
+        <button
+          type="button"
+          class="btn btn-dark"
+          data-toggle="modal"
+          data-target="#modelId"
+        >
+          SETTINGS
+        </button>
+
         <a href="#"
           ><button
             style="width: fit-content"
@@ -154,12 +157,6 @@
             class="btn btn-dark"
           >
             DEACTIVATE ACCOUNT
-          </button>
-        </a>
-
-        <a href="#">
-          <button style="width: fit-content" type="button" class="btn btn-dark">
-            Terms and Conditions
           </button>
         </a>
       </div>

@@ -42,6 +42,9 @@
               </td>
             </tr>
           </table>
+          <div
+            th:replace="normal/fragments/settingfragment :: settingsModal"
+          ></div>
           <form
             novalidate
             method="post"
@@ -178,7 +181,22 @@
                     id="agreement"
                   /><span>
                     I have read and agree to the
-                    <a href="#"> Terms and Conditions</a></span
+                    <span
+                      style="
+                        background-color: transparent;
+                        color: lightskyblue;
+                        outline: none !important;
+                        border: none !important;
+                        width: fit-content;
+                        box-shadow: none;
+                      "
+                      type="button"
+                      class="btn btn-dark"
+                      data-toggle="modal"
+                      data-target="#modelId"
+                    >
+                      Terms and Conditions
+                    </span></span
                   >
                 </td>
               </tr>
